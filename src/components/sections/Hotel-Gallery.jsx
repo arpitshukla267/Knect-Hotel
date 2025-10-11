@@ -1,41 +1,42 @@
 "use client";
 import Image from "next/image";
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 export default function HotelGallery() {
-  const images = [
-    "/gallery-1.png",
-    "/gallery-2.png", 
-    "/gallery-3.png",
-    "/gallery-4.png",
-    "/gallery-5.png",
-  ]; // repeated for simplicity
+  const allImages = Array.from({ length: 19 }, (_, i) =>
+    i < 5 ? `/gallery-${i + 1}.png` : `/gallery-${i + 1}.jpg`
+  );
 
-  const [cols, setCols] = React.useState(5);
+  const [cols, setCols] = useState(5);
 
-  // determine columns based on window width
-  React.useEffect(() => {
+  useEffect(() => {
     const getCols = (w) => {
-      if (typeof w !== 'number') return 5;
       if (w <= 550) return 2;
       if (w <= 1028) return 3;
       return 5;
     };
-
     const handleResize = () => setCols(getCols(window.innerWidth));
-
-    // set initial cols (guard for SSR)
-    if (typeof window !== 'undefined') {
-      handleResize();
-      window.addEventListener('resize', handleResize);
-    }
-
-    return () => {
-      if (typeof window !== 'undefined') {
-        window.removeEventListener('resize', handleResize);
-      }
-    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
   }, []);
+
+  const getImagesPerCol = () => {
+    if (cols === 5) return 4;
+    if (cols === 3) return 6;
+    if (cols === 2) return 9;
+    return 4;
+  };
+
+  const imagesPerCol = getImagesPerCol();
+
+  // split images into columns and duplicate for seamless infinite scroll
+  const columns = Array.from({ length: cols }).map((_, colIdx) => {
+    const start = (colIdx * imagesPerCol) % allImages.length;
+    const end = start + imagesPerCol;
+    const imgs = allImages.slice(start, end);
+    return [...imgs, ...imgs]; // duplicate for seamless scroll
+  });
 
   return (
     <div
@@ -49,58 +50,65 @@ export default function HotelGallery() {
         Vacation Rentals
       </h1>
 
-      {/* Column Marquee Wrapper with full viewport height */}
+      {/* Columns */}
       <div className="flex gap-3.5 w-full max-w-[70%] h-[500px] overflow-hidden">
-        {Array.from({ length: cols }).map((_, colIdx) => (
+        {columns.map((imgs, colIdx) => (
           <div
             key={colIdx}
-            className={`flex-1 flex flex-col gap-5 ${
-              colIdx % 2 === 0 ? "animate-col-up" : "animate-col-down"
-            }`}
+            className="flex-1 overflow-hidden"
           >
-            {/* Duplicate images for seamless looping */}
-            {[...images, ...images].map((src, imgIdx) => (
-              <div
-                key={imgIdx}
-                className="rounded-2xl overflow-hidden w-full flex-shrink-0"
-              >
-                <Image
-                  src={src}
-                  alt={`Hotel ${imgIdx + 1}`}
-                  width={300}
-                  height={400}
-                  className="object-contain w-full h-full" // Changed to contain to prevent cropping
-                />
-              </div>
-            ))}
+            <div
+              className={`flex flex-col gap-5 ${
+                colIdx % 2 === 0 ? "marquee-up" : "marquee-down"
+              }`}
+            >
+              {imgs.map((src, imgIdx) => (
+                <div
+                  key={imgIdx}
+                  className="rounded-2xl overflow-hidden w-full flex-shrink-0"
+                >
+                  <Image
+                    src={src}
+                    alt={`Hotel ${imgIdx + 1}`}
+                    width={300}
+                    height={400}
+                    className="object-cover w-full h-full"
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
-      <button className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">Explore Now</button>
 
-      {/* Column Scroll Animations */}
+      <button className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
+        Explore Now
+      </button>
+
+      {/* Cyclic marquee CSS */}
       <style jsx>{`
-        .animate-col-up {
-          animation: colUp 25s linear infinite;
+        .marquee-up {
+          display: flex;
+          flex-direction: column;
+          animation: marqueeUp linear infinite;
+          animation-duration: 20s;
         }
-        .animate-col-down {
-          animation: colDown 30s linear infinite;
+
+        .marquee-down {
+          display: flex;
+          flex-direction: column;
+          animation: marqueeDown linear infinite;
+          animation-duration: 25s;
         }
-        @keyframes colUp {
-          0% {
-            transform: translateY(0%);
-          }
-          100% {
-            transform: translateY(-350%);
-          }
+
+        @keyframes marqueeUp {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); } /* half because we duplicated the content */
         }
-        @keyframes colDown {
-          0% {
-            transform: translateY(-350%);
-          }
-          100% {
-            transform: translateY(0%);
-          }
+
+        @keyframes marqueeDown {
+          0% { transform: translateY(-50%); }
+          100% { transform: translateY(0); }
         }
       `}</style>
     </div>
