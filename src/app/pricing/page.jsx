@@ -1,20 +1,22 @@
 "use client";
-export const dynamic = "force-dynamic";
 
 import React, { useState, useEffect } from "react";
 import Header from "@/components/sections/Header";
 import { useSearchParams, useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
+export const dynamic = "force-dynamic";
+
 export default function PricingPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const planParam = searchParams.get("plan");
-  const [selectedPlan, setSelectedPlan] = useState(planParam || "Monthly Plan");
-
+  const [selectedPlan, setSelectedPlan] = useState("Monthly Plan");
+  
+  // delay reading searchParams until client
   useEffect(() => {
+    const searchParams = useSearchParams();
+    const planParam = searchParams.get("plan");
     if (planParam) setSelectedPlan(planParam);
-  }, [planParam]);
+  }, []);
 
   const plans = [
     {
@@ -65,8 +67,8 @@ export default function PricingPage() {
     },
   ];
 
-  const handleSelectChange = (e) => {
-    const value = e.target.value;
+
+  const handleSelectChange = (value) => {
     setSelectedPlan(value);
     router.push(`/pricing?plan=${encodeURIComponent(value)}`);
   };
@@ -80,17 +82,14 @@ export default function PricingPage() {
       }}
     >
       <Header />
-
-      {/* Title */}
       <div className="w-[85%] text-center mt-30">
         <h1 className="text-5xl marcellus text-white mb-10">Pricing</h1>
 
-        {/* Tabs */}
         <div className="flex justify-center space-x-6 mb-16">
           {plans.map((p) => (
             <button
               key={p.name}
-              onClick={() => handleSelectChange({ target: { value: p.name } })}
+              onClick={() => handleSelectChange(p.name)}
               className={`px-6 py-2 rounded-md text-white font-medium transition-all duration-300 ${
                 selectedPlan === p.name
                   ? "bg-[#9a753e]"
@@ -102,7 +101,6 @@ export default function PricingPage() {
           ))}
         </div>
 
-        {/* Cards */}
         <div className="flex justify-center items-start gap-10">
           {plans.map((plan) => (
             <motion.div
