@@ -29,8 +29,7 @@ export default function Review() {
     <div
       className="flex flex-col items-center justify-center min-h-screen py-16 text-white"
       style={{
-        background:
-           "linear-gradient(180deg, #111111 5%, #9a753e 80%, #000000 100%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       }}
     >
       <h2 className="text-4xl md:text-5xl marcellus mb-10 text-center">What Our Guest says</h2>

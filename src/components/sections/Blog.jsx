@@ -7,8 +7,7 @@ export default function Blog() {
     <div
       className="flex flex-col justify-center items-center text-center text-white py-20"
       style={{
-        background:
-          "linear-gradient(180deg, #000000 0%, #9a753e 80%, #111111 100%)",
+           background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       }}
     >
         

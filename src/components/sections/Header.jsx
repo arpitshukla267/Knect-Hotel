@@ -21,9 +21,10 @@ function Header() {
     {
       name: "Pricing",
       dropdown: [
-        { name: "Basic", href: "/pricing/basic" },
-        { name: "Pro", href: "/pricing/pro" },
-        { name: "Enterprise", href: "/pricing/enterprise" },
+        { name: "Monthly Plan", href: "/pricing?plan=Monthly Plan" },
+        { name: "Quarterly Plan", href: "/pricing?plan=Quarterly Plan" },
+        { name: "Half-Yearly Plan", href: "/pricing?plan=Half-Yearly Plan" },
+        { name: "Yearly Plan", href: "/pricing?plan=Yearly Plan" },
       ],
     },
     {
@@ -144,13 +145,19 @@ function Header() {
                           initial={{ opacity: 0, y: -10 }}
                           animate={{ opacity: 1, y: 0 }}
                           exit={{ opacity: 0, y: -10 }}
-                          className="absolute top-full left-0 bg-[#1f1f1f] mt-2 rounded-lg shadow-lg py-2 min-w-[150px] z-50"
+                          className="absolute top-full left-0 bg-[#1f1f1f] mt-2 rounded-lg 
+                            shadow-[0_0_15px_2px_rgba(255,255,255,0.6)] py-2 min-w-[200px] z-50
+                            before:content-[''] before:absolute before:top-[-6px] before:left-6 p-2 
+                            before:border-l-8 before:border-r-8 before:border-b-8 
+                            before:border-l-transparent before:border-r-transparent before:border-b-[#1f1f1f]"
                         >
-                          {item.dropdown.map((drop) => (
+                          {item.dropdown.map((drop, dIdx) => (
                             <li
                               key={drop.name}
                               className={clsx(
                                 "px-4 py-2 hover:bg-gray-800 hover:text-yellow-400",
+                                // apply border to all but the last dropdown item
+                                dIdx !== item.dropdown.length - 1 && "border-b border-gray-500",
                                 isActive(drop.href) && "text-yellow-400"
                               )}
                             >

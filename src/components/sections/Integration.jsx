@@ -16,6 +16,7 @@ export default function Integration() {
   const controls = useAnimation();
   const containerRef = useRef(null);
   const [centerIndex, setCenterIndex] = useState(null);
+  
 
   const LOGO_WIDTH = 200;
   const GAP = 160; // same as Tailwind gap-20
@@ -79,8 +80,7 @@ export default function Integration() {
     <div
       className="text-center text-white overflow-hidden relative"
       style={{
-        background:
-          "linear-gradient(180deg, #111111 5%, #9a753e 80%, #000000 0%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       }}
     >
       <h1 className="text-3xl my-15 font-semibold mb-10 marcellus">

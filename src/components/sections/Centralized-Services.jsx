@@ -125,10 +125,9 @@ export default function CentralizedServices() {
   return (
     <div
       className="relative w-full flex pt-20"
-      style={{
-        background:
-          "linear-gradient(180deg, #000000 0%, #9a753e 90%, #111111 100%)",
-      }}
+          style={{
+           background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+         }}
     >
       {/* Left: Text sections */}
       <div className="flex-1 text-[#4b5563]">

@@ -42,7 +42,7 @@ export default function HotelGallery() {
     <div
       className="text-white flex flex-col justify-center items-center w-full py-16 px-4 md:px-0"
       style={{
-        background: "linear-gradient(180deg, #111111 5%, #9a753e 80%, #111111 100%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       }}
     >
       <h1 className="text-center text-4xl md:text-5xl marcellus mb-12">
