@@ -9,14 +9,22 @@ export const dynamic = "force-dynamic";
 
 export default function PricingPage() {
   const router = useRouter();
-  const [selectedPlan, setSelectedPlan] = useState("Monthly Plan");
-  
-  // delay reading searchParams until client
+  const searchParams = useSearchParams();
+  const [selectedPlan, setSelectedPlan] = useState(() => {
+    try {
+      const p = searchParams?.get?.("plan");
+      return p || "Monthly Plan";
+    } catch (e) {
+      return "Monthly Plan";
+    }
+  });
+
+  // update selectedPlan if searchParams changes later
   useEffect(() => {
-    const searchParams = useSearchParams();
-    const planParam = searchParams.get("plan");
-    if (planParam) setSelectedPlan(planParam);
-  }, []);
+    const planParam = searchParams?.get?.("plan");
+    if (planParam && planParam !== selectedPlan) setSelectedPlan(planParam);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams]);
 
   const plans = [
     {
