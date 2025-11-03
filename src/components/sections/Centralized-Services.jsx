@@ -119,15 +119,37 @@ export default function CentralizedServices() {
       });
     });
 
+    // ✅ Mobile slide-in animation (right to left)
+    if (window.innerWidth < 768) {
+      gsap.utils.toArray(".mobile-slide").forEach((section) => {
+        gsap.fromTo(
+          section,
+          { x: "100%", opacity: 0 },
+          {
+            x: "0%",
+            opacity: 1,
+            duration: 0.6,
+            ease: "power2.out",
+            scrollTrigger: {
+              trigger: section,
+              start: "top 90%",
+              toggleActions: "play none none reverse",
+            },
+          }
+        );
+      });
+    }
+
     return () => ScrollTrigger.getAll().forEach((t) => t.kill());
   }, []);
 
   return (
     <div
-      className="relative w-full flex pt-20"
-          style={{
-           background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
-         }}
+      className="relative overflow-hidden md:overflow-visible w-full flex flex-col md:flex-row pt-20"
+      style={{
+        background:
+          "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+      }}
     >
       {/* Left: Text sections */}
       <div className="flex-1 text-[#4b5563]">
@@ -135,28 +157,28 @@ export default function CentralizedServices() {
           <div
             key={i}
             ref={(el) => (sectionRefs.current[i] = el)}
-            className="h-[90vh] flex flex-col justify-start px-8 lg:px-20 pt-10"
+            className="h-auto md:h-[90vh] flex flex-col justify-start px-6 sm:px-10 lg:px-20 py-10 md:pt-10 mobile-slide"
           >
             <div className="max-w-lg space-y-6">
               <h1
                 ref={(el) => (headingRefs.current[i] = el)}
-                className="marcellus text-3xl md:text-5xl leading-tight transition-colors duration-300"
+                className="marcellus text-2xl sm:text-3xl md:text-5xl leading-tight transition-colors duration-300"
               >
                 {service.heading}
               </h1>
               <p
                 ref={(el) => (descRefs.current[i] = el)}
-                className="text-xl leading-relaxed marcellus-sc transition-colors duration-300"
+                className="text-base sm:text-lg md:text-xl leading-relaxed marcellus-sc transition-colors duration-300"
               >
                 {service.description}
               </p>
 
               {service.logo?.length > 0 && (
-                <div className="grid grid-cols-2 gap-3 pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2 sm:pt-4">
                   {service.logo.map((item, idx) => (
                     <p
                       key={idx}
-                      className="text-lg transition-colors duration-300"
+                      className="text-sm sm:text-lg transition-colors duration-300"
                       ref={(el) => {
                         if (!logoRefs.current[i]) logoRefs.current[i] = [];
                         logoRefs.current[i][idx] = el;
@@ -177,11 +199,21 @@ export default function CentralizedServices() {
                 </button>
               )}
             </div>
+
+            {/* ✅ Image below text on mobile only */}
+            <div className="block md:hidden w-full h-64 mt-6 relative rounded-xl overflow-hidden">
+              <Image
+                src={service.image}
+                alt={service.heading}
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         ))}
       </div>
 
-      {/* Right: Sticky Image */}
+      {/* Right: Sticky Image (desktop only) */}
       <div className="hidden md:block w-[50%] sticky top-0 h-screen overflow-hidden">
         <AnimatePresence mode="wait">
           <motion.div

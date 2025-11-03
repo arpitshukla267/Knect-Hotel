@@ -16,18 +16,18 @@ export default function Contact() {
       <Header />
 
       {/* Main Section */}
-      <section className="w-full flex flex-col items-center pt-20 px-6 md:px-20 lg:px-40">
-        <h1 className="text-center text-5xl font-semibold tracking-wide mb-8">
+      <section className="w-full flex flex-col items-center pt-20 px-4 sm:px-8 md:px-20 lg:px-40">
+        <h1 className="text-center text-3xl sm:text-4xl md:text-5xl font-semibold tracking-wide mb-6 sm:mb-8">
           Contact Us
         </h1>
 
         {/* Container for Left + Divider + Right */}
-        <div className="flex flex-col md:flex-row justify-center items-stretch gap-10 w-full pt-10 relative">
+        <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 sm:gap-10 w-full pt-6 sm:pt-10 relative">
 
           {/* Left Side */}
-          <div className="md:w-1/2 space-y-6 flex flex-col p-10">
-            <h2 className="text-2xl">We’re Here for You!</h2>
-            <p className="leading-relaxed text-md">
+          <div className="md:w-1/2 space-y-6 flex flex-col p-4 sm:p-6 md:p-10 text-center md:text-left">
+            <h2 className="text-xl sm:text-2xl">We’re Here for You!</h2>
+            <p className="leading-relaxed text-sm sm:text-base">
               Thank you for reaching out! We appreciate your interest and are
               committed to providing exceptional service. Whether you have a
               question, need assistance, or are exploring a potential
@@ -36,24 +36,24 @@ export default function Contact() {
               process.
             </p>
 
-            <div className="flex flex-col gap-4 text-sm mt-8">
-              <div className="flex items-center gap-3">
+            <div className="flex flex-col gap-4 text-sm sm:text-base mt-6 sm:mt-8">
+              <div className="flex justify-center md:justify-start items-center gap-3">
                 <FaPhoneAlt className="text-lg" />
                 <a href="tel:+9183200XX908" className="hover:underline">
                   +91 83200XX908
                 </a>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex justify-center md:justify-start items-center gap-3">
                 <FaFax className="text-lg" />
                 <a href="tel:+9183200XX908" className="hover:underline">
                   +91 83200XX908
                 </a>
               </div>
-              <div className="flex items-center gap-3">
+              <div className="flex justify-center md:justify-start items-center gap-3">
                 <FaEnvelope className="text-lg" />
                 <a
                   href="mailto:info@knecthotel.com"
-                  className="hover:underline"
+                  className="hover:underline break-all"
                 >
                   info@knecthotel.com
                 </a>
@@ -61,12 +61,12 @@ export default function Contact() {
             </div>
           </div>
 
-          {/* Center Divider Line (Visible only on md and above) */}
+          {/* Divider (Visible only on md and above) */}
           <div className="hidden md:block w-[2px] bg-white/30 self-stretch"></div>
 
           {/* Right Side (Form) */}
-          <div className="md:w-1/2 w-full p-8 flex flex-col justify-start">
-            <h2 className="text-xl mb-4">
+          <div className="md:w-1/2 w-full p-4 sm:p-6 md:p-8 flex flex-col justify-start">
+            <h2 className="text-lg sm:text-xl mb-3 sm:mb-4 text-center md:text-left">
               You've got questions. We’ve got answers.
             </h2>
 
@@ -77,7 +77,8 @@ export default function Contact() {
                   <input
                     type="text"
                     placeholder="Enter name"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md"
+                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div>
@@ -85,7 +86,8 @@ export default function Contact() {
                   <input
                     type="email"
                     placeholder="Enter email"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md"
+                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
+                    autoComplete="off"
                   />
                 </div>
               </div>
@@ -96,7 +98,8 @@ export default function Contact() {
                   <input
                     type="text"
                     placeholder="Enter subject"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md"
+                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
+                    autoComplete="off"
                   />
                 </div>
                 <div>
@@ -104,7 +107,8 @@ export default function Contact() {
                   <input
                     type="text"
                     placeholder="Enter phone"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md"
+                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
+                    autoComplete="off"
                   />
                 </div>
               </div>
@@ -114,14 +118,14 @@ export default function Contact() {
                 <textarea
                   placeholder="Your message"
                   rows={4}
-                  className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md"
+                  className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
                 ></textarea>
               </div>
 
               <div className="flex justify-center pt-4">
                 <button
                   type="submit"
-                  className="bg-[#4b3520] hover:bg-[#6b4b2a] text-[#f5e0c1] px-8 py-2 rounded-full transition-all duration-300 hover:cursor-pointer"
+                  className="bg-[#4b3520] hover:bg-[#6b4b2a] text-[#f5e0c1] px-6 sm:px-8 py-2 rounded-full transition-all duration-300 hover:cursor-pointer text-sm sm:text-base"
                 >
                   Submit
                 </button>
