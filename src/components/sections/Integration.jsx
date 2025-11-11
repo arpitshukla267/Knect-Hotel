@@ -17,10 +17,11 @@ export default function Integration() {
 
   return (
     <div
+      suppressHydrationWarning
       className="text-center text-white overflow-hidden relative pt-20 px-4 sm:px-6"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
-      }}
+      // style={{
+      //   background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+      // }}
     >
       <h1 className="text-2xl sm:text-3xl font-semibold mb-8 sm:mb-10 marcellus">
         50+ Integration Worldwide

@@ -22,9 +22,13 @@ function Page() {
   }, []);
 
   return (
-    <div className="relative">
+    <div className="relative"
+         style={{
+           background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
+         }}
+    >
       {!isLoaded && <StartupLoader />}
-      <div className={`${!isLoaded ? "opacity-0 pointer-events-none" : "opacity-100"} transition-opacity duration-700`}>
+      <div suppressHydrationWarning className={`${!isLoaded ? "opacity-0 pointer-events-none" : "opacity-100"} transition-opacity duration-700`}>
         <Header />
         <Hero />
         <CentralizedServices />

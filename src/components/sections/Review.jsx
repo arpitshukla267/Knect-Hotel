@@ -35,88 +35,113 @@ export default function Review() {
     setIndex((i) => (i === reviews.length - 1 ? 0 : i + 1));
   };
 
-  const variants = {
+  // Image slide animation
+  const imageVariants = {
     enter: (direction) => ({
-      x: direction > 0 ? 100 : -100,
+      x: direction > 0 ? 200 : -200,
       opacity: 0,
       scale: 0.95,
     }),
     center: {
-      zIndex: 1,
       x: 0,
       opacity: 1,
       scale: 1,
       transition: { duration: 0.6, ease: 'easeOut' },
     },
     exit: (direction) => ({
-      zIndex: 0,
-      x: direction > 0 ? -100 : 100,
+      x: direction > 0 ? -200 : 200,
       opacity: 0,
       scale: 0.95,
       transition: { duration: 0.4, ease: 'easeIn' },
     }),
   };
 
+  // Text fade-up animation
+  const textVariants = {
+    enter: { opacity: 0, y: 20 },
+    center: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.6, delay: 0.2, ease: 'easeOut' },
+    },
+    exit: { opacity: 0, y: -20, transition: { duration: 0.3, ease: 'easeIn' } },
+  };
+
   return (
     <div
-      className="flex flex-col items-center justify-center min-h-screen py-10 px-4 text-white overflow-hidden"
+      suppressHydrationWarning
+      className="flex flex-col items-center justify-center min-h-screen py-12 px-4 text-white overflow-hidden"
       style={{
         background: 'radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)',
       }}
     >
-      <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl marcellus mb-8 sm:mb-10 text-center leading-tight">
-        What Our Guest Says
+      <h2 className="text-3xl sm:text-4xl lg:text-5xl marcellus mb-10 text-center leading-tight">
+        What Our Guests Say
       </h2>
 
-      <div className="flex items-center justify-center w-full max-w-3xl relative">
-        {/* Left Arrow */}
-        <button
-          aria-label="Previous review"
-          onClick={prev}
-          className="absolute -left-2 sm:left-4 md:-left-16 hover:cursor-pointer bg-transparent border border-white/60 rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-xl sm:text-2xl md:text-3xl hover:bg-white/10 transition z-10"
-        >
-          &#8592;
-        </button>
+      <div className="relative flex flex-col items-center justify-center gap-10 max-w-5xl w-full">
+        {/* Image + Arrows wrapper (fixed height) */}
+        <div className="relative flex justify-center items-center w-full max-w-[500px] min-h-[280px] sm:min-h-[340px] md:min-h-[400px] mb-8">
+          {/* Left Arrow */}
+          <button
+            aria-label="Previous review"
+            onClick={prev}
+            className="absolute left-2 sm:left-4 md:-left-16 top-1/2 -translate-y-1/2 bg-transparent border border-white/60 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl hover:bg-white/10 transition z-10"
+          >
+            &#8592;
+          </button>
 
-        {/* Animated Review Content */}
-        <div className="relative flex items-center justify-center w-full max-w-lg h-auto min-h-[420px] sm:min-h-[480px] md:min-h-[520px]">
+          {/* Animated Image */}
           <AnimatePresence custom={direction} mode="wait">
             <motion.div
               key={index}
               custom={direction}
-              variants={variants}
+              variants={imageVariants}
               initial="enter"
               animate="center"
               exit="exit"
-              className="absolute flex flex-col items-center justify-center w-full px-2 sm:px-4 text-center"
+              className="absolute w-[250px] sm:w-[320px] md:w-[400px] lg:w-[460px]"
             >
-              <div className="relative w-[220px] sm:w-[300px] md:w-[400px] lg:w-[500px] h-auto mb-6 sm:mb-8 mx-auto">
-                <Image
-                  src={reviews[index].image}
-                  alt={reviews[index].author}
-                  width={500}
-                  height={350}
-                  className="rounded-sm object-cover w-full h-auto"
-                />
-              </div>
-              <p className="max-w-sm sm:max-w-md md:max-w-lg text-center manrope-regular text-sm sm:text-base md:text-md mb-4 sm:mb-6 leading-relaxed">
+              <Image
+                src={reviews[index].image}
+                alt={reviews[index].author}
+                width={460}
+                height={300}
+                className="rounded-xl object-cover w-full h-[260px] sm:h-[300px] md:h-[350px] shadow-[0_0_25px_rgba(245,217,161,0.25)]"
+              />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Right Arrow */}
+          <button
+            aria-label="Next review"
+            onClick={next}
+            className="absolute right-2 sm:right-4 md:-right-16 top-1/2 -translate-y-1/2 bg-transparent border border-white/60 rounded-full w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center text-lg sm:text-xl hover:bg-white/10 transition z-10"
+          >
+            &#8594;
+          </button>
+        </div>
+
+        {/* Text Section */}
+        <div className="relative w-full md:w-3/4 flex flex-col items-center text-center px-4 sm:px-6">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={index}
+              variants={textVariants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              className="w-full"
+            >
+              <p className="text-gray-200 text-sm sm:text-base md:text-lg leading-relaxed mb-4 sm:mb-6 manrope-regular">
                 {reviews[index].text}
               </p>
-              <div className="my-soul-regular text-lg sm:text-xl md:text-2xl mt-1 sm:mt-2">
-                {reviews[index].author}
+              <div className="text-[#f5d9a1] my-soul-regular text-lg sm:text-xl md:text-2xl font-semibold">
+                — {reviews[index].author}
               </div>
             </motion.div>
           </AnimatePresence>
         </div>
-
-        {/* Right Arrow */}
-        <button
-          aria-label="Next review"
-          onClick={next}
-          className="absolute -right-2 sm:right-4 md:-right-16 hover:cursor-pointer bg-transparent border border-white/60 rounded-full w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 flex items-center justify-center text-xl sm:text-2xl md:text-3xl hover:bg-white/10 transition z-10"
-        >
-          &#8594;
-        </button>
       </div>
     </div>
   );

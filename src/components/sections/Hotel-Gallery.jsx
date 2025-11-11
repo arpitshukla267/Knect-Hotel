@@ -41,9 +41,9 @@ export default function HotelGallery() {
   return (
     <div
       className="text-white flex flex-col justify-center items-center w-full py-16 px-4 md:px-0"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
-      }}
+      // style={{
+      //   background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+      // }}
     >
       <h1 className="text-center text-4xl md:text-5xl marcellus mb-12">
         Globally Trusted by 100+ Hotels and <br />
@@ -81,7 +81,7 @@ export default function HotelGallery() {
         ))}
       </div>
 
-      <button className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
+      <button suppressHydrationWarning className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
         Explore Now
       </button>
 

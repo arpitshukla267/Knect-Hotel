@@ -1,139 +1,63 @@
 "use client";
 import React from "react";
 import Header from "../sections/Header";
-import { FaPhoneAlt, FaFax, FaEnvelope } from "react-icons/fa";
+import { Vortex } from "../ui/vortex";
 
 export default function Contact() {
   return (
     <div
-      className="min-h-screen text-white font-[Marcellus] flex flex-col items-center"
+      className="relative min-h-screen text-white overflow-hidden"
       style={{
-        background:
-          "radial-gradient(circle at 50% 80%, #9a753e 0%, #000000 100%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
       }}
     >
-      {/* Header Section */}
-      <Header />
+      <Vortex
+        particleCount={800}
+        baseHue={40}
+        backgroundColor="transparent" // IMPORTANT: make vortex canvas transparent
+        className="flex flex-col items-center justify-center h-screen"
+      >
+        <Header />
 
-      {/* Main Section */}
-      <section className="w-full flex flex-col items-center pt-20 px-4 sm:px-8 md:px-20 lg:px-40">
-        <h1 className="text-center text-3xl sm:text-4xl md:text-5xl font-semibold tracking-wide mb-6 sm:mb-8">
-          Contact Us
-        </h1>
-
-        {/* Container for Left + Divider + Right */}
-        <div className="flex flex-col md:flex-row justify-center items-stretch gap-8 sm:gap-10 w-full pt-6 sm:pt-10 relative">
-
-          {/* Left Side */}
-          <div className="md:w-1/2 space-y-6 flex flex-col p-4 sm:p-6 md:p-10 text-center md:text-left">
-            <h2 className="text-xl sm:text-2xl">We’re Here for You!</h2>
-            <p className="leading-relaxed text-sm sm:text-base">
-              Thank you for reaching out! We appreciate your interest and are
-              committed to providing exceptional service. Whether you have a
-              question, need assistance, or are exploring a potential
-              partnership, our team is here to help. If you're interested in a
-              demo or pricing details, we’d be happy to guide you through the
-              process.
-            </p>
-
-            <div className="flex flex-col gap-4 text-sm sm:text-base mt-6 sm:mt-8">
-              <div className="flex justify-center md:justify-start items-center gap-3">
-                <FaPhoneAlt className="text-lg" />
-                <a href="tel:+9183200XX908" className="hover:underline">
-                  +91 83200XX908
-                </a>
-              </div>
-              <div className="flex justify-center md:justify-start items-center gap-3">
-                <FaFax className="text-lg" />
-                <a href="tel:+9183200XX908" className="hover:underline">
-                  +91 83200XX908
-                </a>
-              </div>
-              <div className="flex justify-center md:justify-start items-center gap-3">
-                <FaEnvelope className="text-lg" />
-                <a
-                  href="mailto:info@knecthotel.com"
-                  className="hover:underline break-all"
-                >
-                  info@knecthotel.com
-                </a>
-              </div>
-            </div>
+        {/* Center Content */}
+        <div className="flex flex-col items-center justify-center text-center space-y-8 z-10">
+          {/* Title */}
+          <div className="backdrop-blur-lg bg-white/5 border border-[#9a753e]/40 px-6 py-4 md:px-20 md:py-10 rounded-full shadow-[0_0_30px_rgba(154,117,62,0.4)]">
+            <h1
+              className="text-3xl md:text-8xl tracking-wide uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#f5e0c1] to-[#9a753e]"
+              style={{
+                fontFamily: "var(--font-montserrat-alt)",
+                fontWeight: 600,
+              }}
+            >
+              L<span className="text-2xl md:text-7xl">et’s</span> C
+              <span className="text-2xl md:text-7xl">ollaborate</span>
+            </h1>
           </div>
 
-          {/* Divider (Visible only on md and above) */}
-          <div className="hidden md:block w-[2px] bg-white/30 self-stretch"></div>
-
-          {/* Right Side (Form) */}
-          <div className="md:w-1/2 w-full p-4 sm:p-6 md:p-8 flex flex-col justify-start">
-            <h2 className="text-lg sm:text-xl mb-3 sm:mb-4 text-center md:text-left">
-              You've got questions. We’ve got answers.
-            </h2>
-
-            <form className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm mb-1">Name</label>
-                  <input
-                    type="text"
-                    placeholder="Enter name"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
-                    autoComplete="off"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm mb-1">Email</label>
-                  <input
-                    type="email"
-                    placeholder="Enter email"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
-                    autoComplete="off"
-                  />
-                </div>
-              </div>
-
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm mb-1">Subject</label>
-                  <input
-                    type="text"
-                    placeholder="Enter subject"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
-                    autoComplete="off"
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm mb-1">Phone</label>
-                  <input
-                    type="text"
-                    placeholder="Enter phone"
-                    className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
-                    autoComplete="off"
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-sm mb-1">Message</label>
-                <textarea
-                  placeholder="Your message"
-                  rows={4}
-                  className="w-full px-3 py-2 bg-transparent border border-white rounded focus:outline-none focus:ring-1 focus:shadow-md text-sm sm:text-base"
-                ></textarea>
-              </div>
-
-              <div className="flex justify-center pt-4">
-                <button
-                  type="submit"
-                  className="bg-[#4b3520] hover:bg-[#6b4b2a] text-[#f5e0c1] px-6 sm:px-8 py-2 rounded-full transition-all duration-300 hover:cursor-pointer text-sm sm:text-base"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          </div>
+          {/* Button */}
+          <a
+            href="mailto:info@knecthotel.com"
+            className="mt-6 inline-flex items-center gap-2 bg-white/10 border border-[#9a753e]/40 rounded-full px-6 py-2 text-[#f5e0c1] hover:bg-[#9a753e]/20 transition-all backdrop-blur-md text-sm sm:text-base shadow-[0_0_20px_rgba(154,117,62,0.3)]"
+          >
+            Drop an Email
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="#f5e0c1"
+              className="w-4 h-4"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3"
+              />
+            </svg>
+          </a>
         </div>
-      </section>
+      </Vortex>
     </div>
   );
 }

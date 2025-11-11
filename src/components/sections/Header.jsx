@@ -13,6 +13,7 @@ export default function Header() {
   const [lastScrollY, setLastScrollY] = useState(0);
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
+  const [openSubheader, setOpenSubheader] = useState(null);
 
   // ✅ Updated Platform dropdown
   const platformDropdown = [
@@ -57,7 +58,7 @@ export default function Header() {
       ],
     },
     {
-      heading: "Flexi AI",
+      heading: "Knect AI",
       description: "Your 24/7 hotel operations brain",
       links: [
         { name: "AI assistant", href: "/platform/flexi-ai/assistant" },
@@ -70,7 +71,7 @@ export default function Header() {
   const menuItems = [
     { name: "Home", href: "/" },
     { name: "About Us", href: "/about" },
-    { name: "Service", href: "/service" },
+    { name: "Services", href: "/services" },
     {
       name: "Pricing",
       dropdown: [
@@ -88,8 +89,11 @@ export default function Header() {
     {
       name: "Solutions",
       dropdown: [
-        { name: "Small Business", href: "/solutions/small-business" },
-        { name: "Enterprise", href: "/solutions/enterprise" },
+        { name: "Hotels", href: "/solutions/hotels" },
+        { name: "Groups", href: "/solutions/groups" },
+        { name: "Hostels", href: "/solutions/hostels" },
+        { name: "Vacation Rentals", href: "/solutions/vacation-rentals" },
+        { name: "Experimental Stays", href: "/solutions/experimental-stays" },
       ],
     },
     {
@@ -98,6 +102,14 @@ export default function Header() {
         { name: "Blog", href: "/resources/blog" },
         { name: "Docs", href: "/resources/docs" },
         { name: "FAQs", href: "/resources/faqs" },
+        { name: "Careers", href: "/resources/careers" },
+        { name: "Collaborations", href: "/resources/collaborations" },
+        { name: "Company Section", href: "/resources/company-section" },
+        { name: "Information Hub", href: "/resources/information-hub" },
+        { name: "Milestone Gallery", href: "/resources/milestone-gallery" },
+        { name: "News", href: "/resources/news" },
+        { name: "Product Videos", href: "/resources/product-videos" },
+        { name: "Recent Updates", href: "/resources/recent-updates" },
       ],
     },
     { name: "Integration", href: "/integration" },
@@ -135,7 +147,7 @@ export default function Header() {
   return (
     <header
       className={clsx(
-        "fixed top-0 left-0 w-full z-[999] transition-transform duration-500",
+        "fixed top-0 left-0 w-full z-[999] transition-transform duration-500 bg-black md:bg-transparent",
         showNav ? "translate-y-0" : "-translate-y-full"
       )}
     >
@@ -207,29 +219,56 @@ export default function Header() {
                     )}
                   </AnimatePresence>
 
-                  {/* ✅ Normal Dropdown */}
-                  <AnimatePresence>
-                    {hovered === item.name && item.dropdown && !item.isMegaMenu && (
-                      <motion.ul
-                        initial={{ opacity: 0, y: -10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        className="absolute top-full left-0 bg-[#1f1f1f] mt-2 rounded-lg shadow-lg py-2 min-w-[200px] z-50"
-                      >
-                        {item.dropdown.map((drop) => (
-                          <li
-                            key={drop.name}
-                            className={clsx(
-                              "px-4 py-2 hover:bg-gray-800 hover:text-yellow-400",
-                              isActive(drop.href) && "text-yellow-400"
-                            )}
-                          >
-                            <Link href={drop.href}>{drop.name}</Link>
-                          </li>
-                        ))}
-                      </motion.ul>
-                    )}
-                  </AnimatePresence>
+                {/* ✅ Normal Dropdown */}
+                <AnimatePresence>
+                  {hovered === item.name && item.dropdown && !item.isMegaMenu && (
+                    <>
+                      {/* Check if this is Resources dropdown */}
+                      {item.name === "Resources" ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          transition={{ duration: 0.3 }}
+                          className="absolute top-full left-1/2 -translate-x-1/2 mt-3 bg-[#1a1a1a] rounded-xl shadow-lg p-6 grid grid-cols-2 gap-4 w-[400px] z-50"
+                        >
+                          {item.dropdown.map((drop) => (
+                            <Link
+                              key={drop.name}
+                              href={drop.href}
+                              className={clsx(
+                                "block text-sm text-gray-300 hover:text-yellow-400 transition",
+                                isActive(drop.href) && "text-yellow-400 font-semibold"
+                              )}
+                            >
+                              {drop.name}
+                            </Link>
+                          ))}
+                        </motion.div>
+                      ) : (
+                        // Default single-column dropdown for all other menus
+                        <motion.ul
+                          initial={{ opacity: 0, y: -10 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          exit={{ opacity: 0, y: -10 }}
+                          className="absolute top-full left-0 bg-[#1f1f1f] mt-2 rounded-lg shadow-lg py-2 min-w-[200px] z-50"
+                        >
+                          {item.dropdown.map((drop) => (
+                            <li
+                              key={drop.name}
+                              className={clsx(
+                                "px-4 py-2 hover:bg-gray-800 hover:text-yellow-400",
+                                isActive(drop.href) && "text-yellow-400"
+                              )}
+                            >
+                              <Link href={drop.href}>{drop.name}</Link>
+                            </li>
+                          ))}
+                        </motion.ul>
+                      )}
+                    </>
+                  )}
+                </AnimatePresence>
                 </li>
                 {index !== menuItems.length - 1 && <span className="text-gray-500">|</span>}
               </React.Fragment>
@@ -269,10 +308,17 @@ export default function Header() {
                 <X size={24} />
               </button>
             </div>
-
+      
+            {/* ✅ Open Subheader State */}
+            {/*
+              Moved safely to top of Header component:
+              const [openSubheader, setOpenSubheader] = useState(null);
+            */}
+      
             <div className="flex-1 overflow-y-auto p-6 space-y-3">
               {menuItems.map((item) => {
                 const open = hovered === item.name;
+      
                 return (
                   <div key={item.name}>
                     <div
@@ -286,6 +332,7 @@ export default function Header() {
                         </motion.span>
                       )}
                     </div>
+      
                     <AnimatePresence>
                       {open && item.dropdown && (
                         <motion.ul
@@ -294,31 +341,67 @@ export default function Header() {
                           exit={{ opacity: 0, height: 0 }}
                           className="pl-4 space-y-2 overflow-hidden"
                         >
-                          {item.isMegaMenu
-                            ? platformDropdown.flatMap((section) =>
-                                section.links.map((link) => (
-                                  <li key={link.name}>
-                                    <Link
-                                      href={link.href}
-                                      onClick={() => setIsOpen(false)}
-                                      className="block py-2 text-gray-300 hover:text-yellow-400"
-                                    >
-                                      {link.name}
-                                    </Link>
-                                  </li>
-                                ))
-                              )
-                            : item.dropdown.map((drop) => (
-                                <li key={drop.name}>
-                                  <Link
-                                    href={drop.href}
-                                    onClick={() => setIsOpen(false)}
-                                    className="block py-2 text-gray-300 hover:text-yellow-400"
+                          {/* ✅ Normal dropdown (non-mega menu) */}
+                          {!item.isMegaMenu &&
+                            item.dropdown.map((drop) => (
+                              <li key={drop.name}>
+                                <Link
+                                  href={drop.href}
+                                  onClick={() => setIsOpen(false)}
+                                  className="block py-2 text-gray-300 hover:text-yellow-400"
+                                >
+                                  {drop.name}
+                                </Link>
+                              </li>
+                            ))}
+      
+                          {/* ✅ Mega Menu with its own subheader dropdowns */}
+                          {item.isMegaMenu &&
+                            platformDropdown.map((section) => (
+                              <div key={section.heading} className="pl-2">
+                                <div
+                                  className="flex justify-between items-center py-2 cursor-pointer text-[#9a753e] font-medium"
+                                  onClick={() =>
+                                    setOpenSubheader(
+                                      openSubheader === section.heading ? null : section.heading
+                                    )
+                                  }
+                                >
+                                  <span>{section.heading}</span>
+                                  <motion.span
+                                    animate={{
+                                      rotate: openSubheader === section.heading ? 180 : 0,
+                                    }}
+                                    transition={{ duration: 0.3 }}
                                   >
-                                    {drop.name}
-                                  </Link>
-                                </li>
-                              ))}
+                                    <ChevronDown size={16} />
+                                  </motion.span>
+                                </div>
+      
+                                <AnimatePresence>
+                                  {openSubheader === section.heading && (
+                                    <motion.ul
+                                      initial={{ opacity: 0, height: 0 }}
+                                      animate={{ opacity: 1, height: "auto" }}
+                                      exit={{ opacity: 0, height: 0 }}
+                                      className="pl-4 space-y-1 overflow-hidden"
+                                    >
+                                      {section.links.map((link) => (
+                                        <li key={link.name}>
+                                          <Link
+                                            href={link.href}
+                                            onClick={() => setIsOpen(false)}
+                                            className="block py-2 text-gray-300 hover:text-yellow-400"
+                                          >
+                                            {link.name}
+                                          </Link>
+                                        </li>
+                                      ))}
+                                    </motion.ul>
+                                  )}
+                                </AnimatePresence>
+                              </div>
+                            ))}
                         </motion.ul>
                       )}
                     </AnimatePresence>
@@ -326,7 +409,7 @@ export default function Header() {
                 );
               })}
             </div>
-
+      
             <div className="p-6 border-t border-gray-700">
               <Link
                 href="/login"
@@ -346,6 +429,8 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
+
+
     </header>
   );
 }

@@ -18,9 +18,9 @@ export default function CentralizedServices() {
       image: "/services.png",
     },
     {
-      heading: "Guest hub",
+      heading: "Guest Hub",
       description:
-        "A comprehensive platform to streamline your guest journey, from flexible reservation options to enhancing post-stay feedback.",
+        "A comprehensive platform to streamline your guest journey — from flexible reservations to post-stay feedback and engagement.",
       logo: [
         "Multi-Platform Access",
         "Analytics & Reporting",
@@ -31,9 +31,9 @@ export default function CentralizedServices() {
       image: "/services-2.png",
     },
     {
-      heading: "Operations hub",
+      heading: "Operations Hub",
       description:
-        "A comprehensive platform to streamline your guest journey, from flexible reservation options to enhancing post-stay feedback.",
+        "Empower staff with automated tools for scheduling, inventory tracking, and task management — all in real-time.",
       logo: [
         "Staff Scheduling",
         "Inventory Tracking",
@@ -44,14 +44,14 @@ export default function CentralizedServices() {
       image: "/services-3.png",
     },
     {
-      heading: "Request any service",
+      heading: "Request Any Service",
       description:
-        "A comprehensive platform to streamline your guest journey, from flexible reservation options to enhancing post-stay feedback.",
+        "Enhance guest satisfaction by offering seamless, on-demand services through an intuitive request system.",
       logo: [
-        "Multi-Platform Access",
-        "Analytics & Reporting",
-        "Food & Beverage Ordering",
-        "Secure Payment Processing",
+        "Quick Request Management",
+        "Instant Notifications",
+        "Guest Feedback Integration",
+        "Automated Follow-ups",
       ],
       buttonText: "Learn More",
       image: "/services-4.png",
@@ -66,7 +66,6 @@ export default function CentralizedServices() {
   const buttonRefs = useRef([]);
 
   useEffect(() => {
-    // Cleanup old triggers
     ScrollTrigger.getAll().forEach((t) => t.kill());
 
     sectionRefs.current.forEach((section, index) => {
@@ -77,49 +76,32 @@ export default function CentralizedServices() {
       const logos = logoRefs.current[index] || [];
       const button = buttonRefs.current[index];
 
-      // initial color
-      gsap.set([heading, desc, ...(logos || []), button].filter(Boolean), {
-        color: "#101010",
-      });
+      const elements = [heading, desc, ...(logos || []), button].filter(Boolean);
+
+      gsap.set(elements, { color: "#888888" });
 
       ScrollTrigger.create({
         trigger: section,
-        start: "top 80%",
-        end: "bottom 80%",
+        start: "top 70%",
+        end: "bottom 15%",
+        toggleActions: "play none none reverse",
         onEnter: () => {
-          gsap.to([heading, desc, ...(logos || []), button].filter(Boolean), {
-            color: "#ffffff",
-            duration: 0.4,
-            ease: "power2.out",
-          });
+          gsap.to(elements, { color: "#ffffff", duration: 0.4, ease: "power2.out" });
           setActiveIndex(index);
         },
         onEnterBack: () => {
-          gsap.to([heading, desc, ...(logos || []), button].filter(Boolean), {
-            color: "#ffffff",
-            duration: 0.4,
-            ease: "power2.out",
-          });
+          gsap.to(elements, { color: "#ffffff", duration: 0.4, ease: "power2.out" });
           setActiveIndex(index);
         },
         onLeave: () => {
-          gsap.to([heading, desc, ...(logos || []), button].filter(Boolean), {
-            color: "#101010",
-            duration: 0.4,
-            ease: "power2.out",
-          });
+          gsap.to(elements, { color: "#888888", duration: 0.4, ease: "power2.out" });
         },
         onLeaveBack: () => {
-          gsap.to([heading, desc, ...(logos || []), button].filter(Boolean), {
-            color: "#101010",
-            duration: 0.4,
-            ease: "power2.out",
-          });
+          gsap.to(elements, { color: "#888888", duration: 0.4, ease: "power2.out" });
         },
       });
     });
 
-    // ✅ Mobile slide-in animation (right to left)
     if (window.innerWidth < 768) {
       gsap.utils.toArray(".mobile-slide").forEach((section) => {
         gsap.fromTo(
@@ -132,7 +114,8 @@ export default function CentralizedServices() {
             ease: "power2.out",
             scrollTrigger: {
               trigger: section,
-              start: "top 90%",
+              start: "top 85%",
+              end: "bottom 20%",
               toggleActions: "play none none reverse",
             },
           }
@@ -140,26 +123,40 @@ export default function CentralizedServices() {
       });
     }
 
-    return () => ScrollTrigger.getAll().forEach((t) => t.kill());
+    const refresh = () => ScrollTrigger.refresh();
+    window.addEventListener("resize", refresh);
+    window.addEventListener("load", refresh);
+    setTimeout(() => ScrollTrigger.refresh(), 1000);
+
+    return () => {
+      window.removeEventListener("resize", refresh);
+      window.removeEventListener("load", refresh);
+      ScrollTrigger.getAll().forEach((t) => t.kill());
+    };
   }, []);
 
   return (
     <div
       className="relative overflow-hidden md:overflow-visible w-full flex flex-col md:flex-row pt-20"
       style={{
-        background:
-          "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       }}
     >
       {/* Left: Text sections */}
-      <div className="flex-1 text-[#4b5563]">
+      <div className="relative flex-1 text-[#888888] overflow-hidden">
+        {/* Background accent glows */}
+        <div className="absolute inset-0 opacity-20 pointer-events-none">
+          <div className="absolute -top-40 -left-20 w-[500px] h-[500px] bg-[#9a753e44] blur-[180px] rounded-full"></div>
+          <div className="absolute bottom-10 right-10 w-[400px] h-[400px] bg-[#ffffff22] blur-[160px] rounded-full"></div>
+        </div>
+
         {services.map((service, i) => (
           <div
             key={i}
             ref={(el) => (sectionRefs.current[i] = el)}
-            className="h-auto md:h-[90vh] flex flex-col justify-start px-6 sm:px-10 lg:px-20 py-10 md:pt-10 mobile-slide"
+            className="relative h-auto md:h-[90vh] flex flex-col justify-center md:justify-center px-6 sm:px-12 lg:px-28 py-10 md:pt-10 mobile-slide"
           >
-            <div className="max-w-lg space-y-6">
+            <div className="max-w-2xl space-y-6 relative z-10">
               <h1
                 ref={(el) => (headingRefs.current[i] = el)}
                 className="marcellus text-2xl sm:text-3xl md:text-5xl leading-tight transition-colors duration-300"
@@ -192,6 +189,7 @@ export default function CentralizedServices() {
 
               {service.buttonText && (
                 <button
+                  suppressHydrationWarning
                   className="mt-4 px-6 py-3 bg-white/20 backdrop-blur-md hover:bg-white/30 hover:text-yellow-400 font-semibold rounded-lg transition-colors duration-300"
                   ref={(el) => (buttonRefs.current[i] = el)}
                 >
