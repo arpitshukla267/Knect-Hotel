@@ -80,29 +80,32 @@ export default function Footer() {
       </div>
 
       {/* Awards Section */}
-      <div className="border-t border-gray-800 py-10">
-        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center text-center">
-          <div>
-            <Image src="https://www.startupindia.gov.in/content/dam/invest-india/Logo/startupindia_logo.svg" alt="Y Combinator" width={60} height={60} className="mx-auto" />
-            <p className="mt-2 text-lg font-semibold text-white">Startup India</p>
-          </div>
-
-          <div>
-            <Image src="/getapp.png" alt="GetApp" width={60} height={60} className="mx-auto" />
-            <p className="mt-2 text-lg font-semibold text-white">Start In Up</p>
-          </div>
-
-          <div>
-            <Image src="https://i.pinimg.com/736x/0c/e1/ba/0ce1ba4c740de259538e0a294cec8d7b.jpg" alt="Software Advice" width={60} height={60} className="mx-auto" />
-            <p className="mt-2 text-lg font-semibold text-white">MSME</p>
-          </div>
-
-          <div>
-            <Image src="https://i.pinimg.com/1200x/3a/91/2c/3a912c00ec4a2e65d517635f6b65d5ff.jpg" alt="Software Suggest" width={60} height={60} className="mx-auto" />
-            <p className="mt-2 text-lg font-semibold text-white">ISO</p>
-          </div>
+<div className="border-t border-gray-800 py-10">
+  <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 items-center text-center">
+    {[
+      { src: "/logo-startupindia.jpeg", name: "Startup India" },
+      { src: "/logo-startinup.jpeg", name: "Start In Up" },
+      { src: "/logo-msme.jpeg", name: "MSME" },
+      { src: "/logo-iso.jpeg", name: "ISO" },
+    ].map((logo, i) => (
+      <div
+        key={i}
+        className="flex flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 lg:w-[15%]"
+      >
+        <div className="relative w-full aspect-square">
+          <Image
+            src={logo.src}
+            alt={logo.name}
+            fill
+            className="object-contain"
+          />
         </div>
+        <p className="mt-2 text-lg font-semibold text-white">{logo.name}</p>
       </div>
+    ))}
+  </div>
+</div>
+
 
       {/* Bottom Bar */}
       <div className="border-t border-gray-800 py-6 text-sm">
