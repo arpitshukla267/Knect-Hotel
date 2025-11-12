@@ -39,14 +39,14 @@ export default function Blog() {
           viewport={{ once: true }}
           className="flex flex-row lg:flex-col gap-3 sm:gap-4 justify-center mb-6 lg:mb-0 overflow-x-auto lg:overflow-visible w-full sm:w-auto"
         >
-          {["/blog-left-1.png", "/blog-left-2.png", "/blog-left-3.png"].map((img, i) => (
+          {["/gallery-1.png", "/gallery-2.png", "/gallery-3.png"].map((img, i) => (
             <Image
               key={i}
               src={img}
               alt={`Blog Left ${i}`}
               width={280}
               height={200}
-              className="rounded-xl object-cover w-[45%] sm:w-[220px] lg:w-[280px] mx-auto shadow-md"
+              className="rounded-xl object-cover w-[45%] sm:w-[220px] lg:w-[280px] h-[200px] mx-auto shadow-md"
             />
           ))}
         </motion.div>
@@ -90,14 +90,14 @@ export default function Blog() {
           viewport={{ once: true }}
           className="flex flex-row lg:flex-col gap-3 sm:gap-4 justify-center mt-10 lg:mt-0 overflow-x-auto lg:overflow-visible w-full sm:w-auto"
         >
-          {["/blog-right-1.png", "/blog-right-2.png", "/blog-right-3.png"].map((img, i) => (
+          {["/gallery-4.png", "/gallery-5.png", "/gallery-1.png"].map((img, i) => (
             <Image
               key={i}
               src={img}
               alt={`Blog Right ${i}`}
               width={280}
               height={200}
-              className="rounded-xl object-cover w-[45%] sm:w-[220px] lg:w-[280px] mx-auto shadow-md"
+              className="rounded-xl object-cover w-[45%] sm:w-[220px] lg:w-[280px] h-[200px] mx-auto shadow-md"
             />
           ))}
         </motion.div>

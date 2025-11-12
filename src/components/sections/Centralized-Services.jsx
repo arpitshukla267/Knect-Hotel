@@ -221,7 +221,7 @@ export default function CentralizedServices() {
             initial={{ opacity: 0, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 1 }}
-            transition={{ duration: 0.4 }}
+            transition={{ duration: 0.2, ease: "easeInOut"  }}
             className="relative w-full h-full my-auto"
           >
             <Image
