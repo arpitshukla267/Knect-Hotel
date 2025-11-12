@@ -1,6 +1,7 @@
 "use client";
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
+import Link from "next/link";
 
 export default function HotelGallery() {
   const allImages = Array.from({ length: 19 }, (_, i) =>
@@ -81,9 +82,9 @@ export default function HotelGallery() {
         ))}
       </div>
 
-      <button suppressHydrationWarning className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
+      <Link href={"/solutions/hotels"} suppressHydrationWarning className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
         Explore Now
-      </button>
+      </Link>
 
       {/* Cyclic marquee CSS */}
       <style jsx>{`

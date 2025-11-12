@@ -103,12 +103,12 @@ export default function ServicesPage() {
         }}
       />
 
-      <div className="relative z-10 text-center py-16">
+      <div className="relative z-10 text-center pb-12 pt-28">
         <motion.h1
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
-          className="text-4xl md:text-5xl font-bold text-white drop-shadow-[0_0_15px_rgba(245,217,161,0.3)]"
+          className="text-3xl md:text-5xl font-bold text-white drop-shadow-[0_0_15px_rgba(245,217,161,0.3)]"
         >
           Our Signature Services
         </motion.h1>
@@ -116,7 +116,7 @@ export default function ServicesPage() {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.3 }}
-          className="text-[#f5d9a1] mt-3 text-base md:text-lg max-w-xl mx-auto"
+          className="text-[#f5d9a1] mt-3 text-base md:text-lg max-w-xs md:max-w-xl mx-auto"
         >
           Discover the hallmark amenities that define the KnectHotel experience.
         </motion.p>
@@ -127,7 +127,7 @@ export default function ServicesPage() {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.4, duration: 1 }}
-        className="relative z-10 max-w-7xl mx-auto px-6 pb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10"
+        className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 pb-24 grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-10"
       >
         {services.map((s, i) => (
           <motion.div
@@ -145,11 +145,11 @@ export default function ServicesPage() {
             />
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end p-6 backdrop-blur-[2px]">
-              <h3 className="text-2xl font-semibold text-[#f5d9a1] mb-1 drop-shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent flex flex-col justify-end px-4 md:p-6 backdrop-blur-[2px]">
+              <h3 className="text-lg md:text-2xl font-semibold text-[#f5d9a1] mb-1 drop-shadow-lg">
                 {s.title}
               </h3>
-              <p className="text-gray-200 text-sm leading-snug line-clamp-2">
+              <p className="text-gray-200 text-xs md:text-sm leading-snug line-clamp-2">
                 {s.desc}
               </p>
               <div className="mt-3 text-[#f5d9a1] font-semibold text-sm opacity-0 group-hover:opacity-100 transition-all duration-500">

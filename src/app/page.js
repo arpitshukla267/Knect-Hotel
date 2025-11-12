@@ -11,6 +11,7 @@ const Integration = ClientOnlyIntegration;
 import Blog from "@/components/sections/Blog";
 import Review from "@/components/sections/Review";
 import Contact from "@/components/sections/Contact";
+import Footer from "@/components/sections/Footer";
 
 function Page() {
   const [isLoaded, setIsLoaded] = useState(false);

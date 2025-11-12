@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import Link from "next/link";
 
 function Hero() {
   const [mounted, setMounted] = useState(false);
@@ -32,12 +33,19 @@ function Hero() {
         </h1>
 
         <div className="mt-8 flex lg:flex-row flex-col items-start gap-6">
-          <button className="bg-[#ba9655] hover:bg-yellow-700 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition">
-            Get Started for free
-          </button>
-          <button className="bg-[#ba9655] hover:bg-yellow-600 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition">
-            Book a Demo
-          </button>
+          <div className="flex space-x-4">
+            <Link href="/login">
+              <button className="bg-[#ba9655] hover:bg-yellow-700 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
+                Get Started for Free
+              </button>
+            </Link>
+          
+            <Link href="/login">
+              <button className="bg-[#ba9655] hover:bg-yellow-600 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
+                Book a Demo
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
     </div>

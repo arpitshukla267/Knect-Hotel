@@ -105,8 +105,8 @@ export default function GroupsPage() {
             animate="visible"
             custom={1}
           >
-            Showcase event spaces, conference halls, and wedding destinations
-            — powered by KNECT’s integrated group booking and event automation.
+            Discover spaces for every celebration and corporate milestone —
+            powered by KNECT’s unified group event automation.
           </motion.p>
 
           <motion.p
@@ -116,24 +116,24 @@ export default function GroupsPage() {
             animate="visible"
             custom={2}
           >
-            From business summits to dream weddings, KNECT transforms venue
-            management with unified scheduling, billing, and real-time
-            collaboration tools.
+            From beach weddings to global conferences, manage large-scale events
+            effortlessly with KNECT’s centralized scheduling, billing, and
+            guest-experience systems.
           </motion.p>
         </div>
 
         <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#E2C994] to-transparent" />
       </motion.div>
 
-      {/* Groups Grid */}
+      {/* Groups Grid — identical layout & breakpoints as Hotels */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 py-20"
+        className="max-w-7xl mx-auto px-4 md:px-6 py-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10"
           variants={{
             hidden: {},
             visible: {
@@ -150,7 +150,7 @@ export default function GroupsPage() {
               transition={{ type: "spring", stiffness: 120 }}
             >
               <div
-                className="relative h-96 perspective-1000"
+                className="relative h-80 md:h-96 perspective-1000"
                 onMouseEnter={() => handleMouseEnter(group.id)}
                 onMouseLeave={() => handleMouseLeave(group.id)}
               >
@@ -176,23 +176,25 @@ export default function GroupsPage() {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="text-2xl font-bold mb-2 text-[#E2C994]">
+                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 text-white">
+                        <h3 className="text-md md:text-2xl font-semibold md:font-bold mb-1 md:mb-2 text-[#E2C994]">
                           {group.name}
                         </h3>
-                        <div className="flex items-center gap-2 mb-3 text-gray-200">
-                          <MapPin className="w-4 h-4" />
-                          <span className="text-sm">{group.location}</span>
+                        <div className="flex items-center gap-1 md:gap-2 md:mb-3 text-gray-200">
+                          <MapPin className="md:w-4 w-3 h-3 md:h-4" />
+                          <span className="text-xs md:text-sm">
+                            {group.location}
+                          </span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Users className="w-5 h-5 text-[#E2C994]" />
-                            <span className="text-sm text-gray-200">
+                          <div className="flex items-center gap-1 md:gap-2">
+                            <Users className="md:w-5 w-4 h-4 md:h-5 text-[#E2C994]" />
+                            <span className="text-xs md:text-sm">
                               {group.capacity}
                             </span>
                           </div>
                           <div className="text-right">
-                            <div className="text-lg font-semibold text-[#E2C994]">
+                            <div className="text-md md:text-2xl font-bold text-[#E2C994]">
                               ★ {group.rating}
                             </div>
                           </div>
@@ -203,7 +205,7 @@ export default function GroupsPage() {
 
                   {/* Back */}
                   <div
-                    className="absolute w-full h-full rounded-xl p-6 shadow-xl scale-110"
+                    className="absolute w-full h-full rounded-xl p-3 md:p-6 shadow-xl scale-105 md:scale-110"
                     style={{
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
@@ -212,8 +214,10 @@ export default function GroupsPage() {
                     }}
                   >
                     <div className="flex flex-col h-full text-[#E2C994]">
-                      <h3 className="text-2xl font-bold mb-4">{group.name}</h3>
-                      <p className="text-yellow-100 mb-6 flex-grow text-sm leading-relaxed">
+                      <h3 className="text-md md:text-2xl font-bold mb-2 md:mb-4">
+                        {group.name}
+                      </h3>
+                      <p className="text-yellow-100 mb-2 md:mb-6 flex-grow text-xs md:text-sm leading-relaxed">
                         {group.description}
                       </p>
                       <div className="space-y-4">
@@ -223,14 +227,14 @@ export default function GroupsPage() {
                             {group.amenities.map((a, i) => (
                               <span
                                 key={i}
-                                className="px-3 py-1 bg-[#E2C994]/20 rounded-full text-sm"
+                                className="px-3 py-1 bg-[#E2C994]/20 rounded-full text-xs md:text-sm"
                               >
                                 {a}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <button className="w-full bg-[#E2C994] text-black font-semibold py-3 rounded-lg hover:bg-[#f2dca3] transition-colors">
+                        <button className="w-full bg-[#E2C994] text-black font-semibold py-3 text-xs md:text-md rounded-lg hover:bg-[#f2dca3] transition-colors">
                           Inquire Now
                         </button>
                       </div>

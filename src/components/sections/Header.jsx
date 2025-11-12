@@ -14,8 +14,8 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [hovered, setHovered] = useState(null);
   const [openSubheader, setOpenSubheader] = useState(null);
+  const [mobileOpen, setMobileOpen] = useState(null); // ✅ separate state for mobile dropdowns
 
-  // ✅ Updated Platform dropdown
   const platformDropdown = [
     {
       heading: "Operations hub",
@@ -84,7 +84,7 @@ export default function Header() {
     {
       name: "Platform",
       dropdown: platformDropdown,
-      isMegaMenu: true, // flag for custom design
+      isMegaMenu: true,
     },
     {
       name: "Solutions",
@@ -112,7 +112,6 @@ export default function Header() {
         { name: "Recent Updates", href: "/resources/recent-updates" },
       ],
     },
-    { name: "Integration", href: "/integration" },
   ];
 
   useEffect(() => {
@@ -292,7 +291,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* ✅ Mobile Slider Menu */}
+      {/* ✅ Mobile Menu Fixed */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -308,31 +307,32 @@ export default function Header() {
                 <X size={24} />
               </button>
             </div>
-      
-            {/* ✅ Open Subheader State */}
-            {/*
-              Moved safely to top of Header component:
-              const [openSubheader, setOpenSubheader] = useState(null);
-            */}
-      
+
             <div className="flex-1 overflow-y-auto p-6 space-y-3">
               {menuItems.map((item) => {
-                const open = hovered === item.name;
-      
+                const open = mobileOpen === item.name;
+
                 return (
                   <div key={item.name}>
                     <div
                       className="flex justify-between items-center py-3 cursor-pointer text-white"
-                      onClick={() => setHovered(open ? null : item.name)}
+                      onClick={() => setMobileOpen(open ? null : item.name)}
                     >
-                      <span>{item.name}</span>
+                      {item.href && !item.dropdown ? (
+                        <Link href={item.href} onClick={() => setIsOpen(false)}>
+                          {item.name}
+                        </Link>
+                      ) : (
+                        <span>{item.name}</span>
+                      )}
+
                       {item.dropdown && (
                         <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.3 }}>
                           <ChevronDown size={18} />
                         </motion.span>
                       )}
                     </div>
-      
+
                     <AnimatePresence>
                       {open && item.dropdown && (
                         <motion.ul
@@ -341,7 +341,6 @@ export default function Header() {
                           exit={{ opacity: 0, height: 0 }}
                           className="pl-4 space-y-2 overflow-hidden"
                         >
-                          {/* ✅ Normal dropdown (non-mega menu) */}
                           {!item.isMegaMenu &&
                             item.dropdown.map((drop) => (
                               <li key={drop.name}>
@@ -354,8 +353,7 @@ export default function Header() {
                                 </Link>
                               </li>
                             ))}
-      
-                          {/* ✅ Mega Menu with its own subheader dropdowns */}
+
                           {item.isMegaMenu &&
                             platformDropdown.map((section) => (
                               <div key={section.heading} className="pl-2">
@@ -377,7 +375,7 @@ export default function Header() {
                                     <ChevronDown size={16} />
                                   </motion.span>
                                 </div>
-      
+
                                 <AnimatePresence>
                                   {openSubheader === section.heading && (
                                     <motion.ul
@@ -409,7 +407,7 @@ export default function Header() {
                 );
               })}
             </div>
-      
+
             <div className="p-6 border-t border-gray-700">
               <Link
                 href="/login"
@@ -429,8 +427,6 @@ export default function Header() {
           </motion.div>
         )}
       </AnimatePresence>
-
-
     </header>
   );
 }

@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -53,7 +54,7 @@ export default function CentralizedServices() {
         "Guest Feedback Integration",
         "Automated Follow-ups",
       ],
-      buttonText: "Learn More",
+      // buttonText: "Learn More",
       image: "/services-4.png",
     },
   ];
@@ -188,13 +189,14 @@ export default function CentralizedServices() {
               )}
 
               {service.buttonText && (
-                <button
+                <Link
+                  href={"/login"}
                   suppressHydrationWarning
                   className="mt-4 px-6 py-3 bg-white/20 backdrop-blur-md hover:bg-white/30 hover:text-yellow-400 font-semibold rounded-lg transition-colors duration-300"
                   ref={(el) => (buttonRefs.current[i] = el)}
                 >
                   {service.buttonText}
-                </button>
+                </Link>
               )}
             </div>
 

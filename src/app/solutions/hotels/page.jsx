@@ -138,13 +138,13 @@ export default function HotelsPage() {
 
       {/* Hotels Grid */}
       <motion.div
-        className="max-w-7xl mx-auto px-6 py-20"
+        className="max-w-7xl mx-auto px-4 md:px-6 py-20"
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true }}
       >
         <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-10"
+          className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-10"
           variants={{
             hidden: {},
             visible: {
@@ -161,12 +161,12 @@ export default function HotelsPage() {
               transition={{ type: "spring", stiffness: 120 }}
             >
               <div
-                className="relative h-96 perspective-1000"
+                className="relative h-80 md:h-96 perspective-1000"
                 onMouseEnter={() => handleMouseEnter(hotel.id)}
                 onMouseLeave={() => handleMouseLeave(hotel.id)}
               >
                 <div
-                  className={`relative w-full h-full transition-transform duration-[1000ms]  ${
+                  className={`relative w-full h-80 md:h-full transition-transform duration-[1000ms]  ${
                     flipped[hotel.id] ? "rotate-y-180" : ""
                   }`}
                   style={{
@@ -187,18 +187,18 @@ export default function HotelsPage() {
                       className="w-full h-full object-cover"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent">
-                      <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                        <h3 className="text-2xl font-bold mb-2 text-[#E2C994]">
+                      <div className="absolute bottom-0 left-0 right-0 p-3 md:p-6 text-white">
+                        <h3 className="text-md md:text-2xl font-semibold md:font-bold mb-1 md:mb-2 text-[#E2C994]">
                           {hotel.name}
                         </h3>
-                        <div className="flex items-center gap-2 mb-3 text-gray-200">
-                          <MapPin className="w-4 h-4" />
-                          <span className="text-sm">{hotel.location}</span>
+                        <div className="flex items-center gap-1 md:gap-2 md:mb-3 text-gray-200">
+                          <MapPin className="md:w-4 w-3 h-3 md:h-4" />
+                          <span className="text-xs md:text-sm">{hotel.location}</span>
                         </div>
                         <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2">
-                            <Star className="w-5 h-5 fill-[#E2C994] text-[#E2C994]" />
-                            <span className="font-semibold">
+                          <div className="flex items-center gap-1 md:gap-2">
+                            <Star className="md:w-5 w-4 h-4 md:h-5 fill-[#E2C994] text-[#E2C994]" />
+                            <span className="md:font-semibold">
                               {hotel.rating}
                             </span>
                             <span className="text-sm text-gray-300">
@@ -206,7 +206,7 @@ export default function HotelsPage() {
                             </span>
                           </div>
                           <div className="text-right">
-                            <div className="text-2xl font-bold text-[#E2C994]">
+                            <div className="text-md md:text-2xl font-bold text-[#E2C994]">
                               ${hotel.pricePerNight}
                             </div>
                             <div className="text-xs text-gray-300">
@@ -220,7 +220,7 @@ export default function HotelsPage() {
 
                   {/* Back */}
                   <div
-                    className="absolute w-full h-full rounded-xl p-6 shadow-xl scale-110"
+                    className="absolute w-full h-full rounded-xl p-3 md:p-6 shadow-xl scale-105 md:scale-110"
                     style={{
                       backfaceVisibility: "hidden",
                       transform: "rotateY(180deg)",
@@ -229,10 +229,10 @@ export default function HotelsPage() {
                     }}
                   >
                     <div className="flex flex-col h-full text-[#E2C994]">
-                      <h3 className="text-2xl font-bold mb-4">
+                      <h3 className="text-md md:text-2xl font-bold mb-2 md:mb-4">
                         {hotel.name}
                       </h3>
-                      <p className="text-yellow-100 mb-6 flex-grow text-sm leading-relaxed">
+                      <p className="text-yellow-100 mb-2 md:mb-6 flex-grow text-xs md:text-sm leading-relaxed">
                         {hotel.description}
                       </p>
                       <div className="space-y-4">
@@ -242,14 +242,14 @@ export default function HotelsPage() {
                             {hotel.amenities.map((a, i) => (
                               <span
                                 key={i}
-                                className="px-3 py-1 bg-[#E2C994]/20 rounded-full text-sm"
+                                className="px-3 py-1 bg-[#E2C994]/20 rounded-full text-xs md:text-sm"
                               >
                                 {a}
                               </span>
                             ))}
                           </div>
                         </div>
-                        <button className="w-full bg-[#E2C994] text-black font-semibold py-3 rounded-lg hover:bg-[#f2dca3] transition-colors">
+                        <button className="w-full bg-[#E2C994] text-black font-semibold py-3 text-xs md:text-md rounded-lg hover:bg-[#f2dca3] transition-colors">
                           Book Now - ${hotel.pricePerNight}/night
                         </button>
                       </div>

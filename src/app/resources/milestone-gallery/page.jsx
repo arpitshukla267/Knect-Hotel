@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/sections/Header";
@@ -60,7 +60,7 @@ const timelineVariants = {
   },
 };
 
-// ✅ Milestone Card (with Read More button)
+// ✅ Milestone Card
 function MilestoneCard({ milestone, index, onReadMore }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.3 });
@@ -81,7 +81,7 @@ function MilestoneCard({ milestone, index, onReadMore }) {
       {/* Timeline Dot */}
       <div className="absolute left-[25px] md:left-1/2 w-4 h-4 bg-yellow-400 opacity-25 rounded-full border-4 border-[#9a753e] transform md:-translate-x-1/2 z-10"></div>
 
-      {/* Card Content */}
+      {/* Card */}
       <div
         className={`flex-1 ml-12 md:ml-0 ${
           isLeft
@@ -91,7 +91,6 @@ function MilestoneCard({ milestone, index, onReadMore }) {
       >
         <div className="relative bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl px-6 py-5 hover:bg-white/15 transition-all duration-300 shadow-lg">
           <div className="flex items-center justify-between gap-4">
-            {/* Left or Right Small Image */}
             {isLeft && milestone.images?.[0] && (
               <div className="relative w-40 h-40 rounded-xl overflow-hidden hidden md:block">
                 <Image
@@ -103,7 +102,7 @@ function MilestoneCard({ milestone, index, onReadMore }) {
               </div>
             )}
 
-            {/* Text Content */}
+            {/* Text */}
             <div className="flex-1">
               <div className="flex items-center gap-3 mb-2 justify-center md:justify-end">
                 <span className="px-3 py-1 bg-white/20 rounded-full text-xs font-semibold">
@@ -120,7 +119,6 @@ function MilestoneCard({ milestone, index, onReadMore }) {
                 {milestone.description}
               </p>
 
-              {/* ✅ Read More Button */}
               <button
                 onClick={() => onReadMore(milestone)}
                 className="text-[#d2a86a] font-medium text-sm hover:underline transition-colors"
@@ -146,8 +144,31 @@ function MilestoneCard({ milestone, index, onReadMore }) {
   );
 }
 
-// ✅ Fullscreen Modal Popup
+// ✅ Scroll-lock-enabled Modal
 function MilestoneModal({ milestone, onClose }) {
+  // 🧠 Scroll lock for modal open state
+  useEffect(() => {
+    let scrollY;
+    if (milestone) {
+      scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflowY = "hidden";
+      document.body.style.width = "100%";
+    } else {
+      const y = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflowY = "";
+      document.body.style.width = "";
+      if (y) window.scrollTo(0, parseInt(y || "0") * -1);
+    }
+  }, [milestone]);
+
   return (
     <AnimatePresence>
       {milestone && (
@@ -157,53 +178,55 @@ function MilestoneModal({ milestone, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
         >
-          <motion.div
-            initial={{ scale: 0.9, opacity: 0 }}
-            animate={{ scale: 1, opacity: 1 }}
-            exit={{ scale: 0.9, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="bg-white/10 border border-white/20 rounded-3xl p-6 sm:p-10 backdrop-blur-xl max-w-4xl w-full relative text-center overflow-y-auto max-h-[90vh]"
-          >
+        <motion.div
+          initial={{ scale: 0.9, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.9, opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className="bg-white/10 border border-white/20 rounded-3xl w-full max-w-4xl relative flex flex-col max-h-[70vh] md:max-h-[85vh] overflow-hidden"
+        >
             <button
               onClick={onClose}
-              className="absolute top-4 right-4 text-white/80 hover:text-white text-3xl font-bold"
+              className="absolute top-4 right-4 text-white/80 hover:text-white text-3xl font-bold z-20"
             >
               ×
             </button>
 
-            <h2 className="text-2xl sm:text-3xl marcellus mb-2">
-              {milestone.title}
-            </h2>
-            <p className="text-sm sm:text-base text-white/70 mb-6">
-              {milestone.year} — {milestone.achievement}
-            </p>
+            {/* Scrollable Content */}
+            <div className="overflow-y-auto px-6 sm:px-10 pt-10 pb-10 scroll-smooth custom-scrollbar">
+            <h2 className="text-2xl sm:text-3xl marcellus mb-2 text-center">
+                {milestone.title}
+              </h2>
+              <p className="text-sm sm:text-base text-white/70 mb-6 text-center">
+                {milestone.year} — {milestone.achievement}
+              </p>
 
-            {/* Multiple Images */}
-            {milestone.images && milestone.images.length > 0 && (
-              <div
-                className={`grid ${
-                  milestone.images.length > 1 ? "grid-cols-2" : "grid-cols-1"
-                } gap-4 mb-6`}
-              >
-                {milestone.images.map((src, i) => (
-                  <div
-                    key={i}
-                    className="relative w-full h-60 sm:h-72 md:h-80 rounded-xl overflow-hidden"
-                  >
-                    <Image
-                      src={src}
-                      alt={milestone.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            )}
+              {milestone.images && milestone.images.length > 0 && (
+                <div
+                  className={`grid ${
+                    milestone.images.length > 1 ? "grid-cols-2" : "grid-cols-1"
+                  } gap-4 mb-6`}
+                >
+                  {milestone.images.map((src, i) => (
+                    <div
+                      key={i}
+                      className="relative w-full h-60 sm:h-72 md:h-80 rounded-xl overflow-hidden"
+                    >
+                      <Image
+                        src={src}
+                        alt={milestone.title}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
 
-            <p className="text-base text-white/90 leading-relaxed manrope-regular">
-              {milestone.details}
-            </p>
+              <p className="text-base text-white/90 leading-relaxed manrope-regular text-center">
+                {milestone.details}
+              </p>
+            </div>
           </motion.div>
         </motion.div>
       )}

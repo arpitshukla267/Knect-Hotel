@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import Header from "@/components/sections/Header";
 import { useSearchParams, useRouter } from "next/navigation";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function PricingClient() {
   const router = useRouter();
@@ -19,6 +19,8 @@ export default function PricingClient() {
       return "Monthly Plan";
     }
   });
+
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   useEffect(() => {
     const planParam = searchParams?.get?.("plan");
@@ -77,6 +79,7 @@ export default function PricingClient() {
   const handleSelectChange = (value) => {
     setSelectedPlan(value);
     router.push(`/pricing?plan=${encodeURIComponent(value)}`);
+    setIsDropdownOpen(false);
 
     // Smooth scroll card into view on mobile/tablet
     const index = plans.findIndex((p) => p.name === value);
@@ -91,7 +94,7 @@ export default function PricingClient() {
 
   return (
     <div
-      className="min-h-screen flex flex-col items-center"
+      className="min-h-screen flex flex-col items-center py-8"
       style={{
         background:
           "linear-gradient(180deg, #000000 0%, #9a753e 80%, #111111 100%)",
@@ -104,8 +107,58 @@ export default function PricingClient() {
           Pricing
         </h1>
 
-        {/* --- Plan Buttons --- */}
-        <div className="flex flex-wrap justify-center items-center gap-4 mb-10">
+        {/* --- Dropdown selector (replaces plain buttons on mobile) --- */}
+        <div className="relative inline-block md:hidden">
+          <button
+            onClick={() => setIsDropdownOpen(!isDropdownOpen)}
+            className="flex items-center justify-between w-60 bg-[#1f1f1f] text-white px-5 py-3 rounded-md text-lg hover:bg-[#9a753e]/20 transition-all"
+          >
+            {selectedPlan}
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={2}
+              stroke="currentColor"
+              className={`w-5 h-5 transition-transform ${
+                isDropdownOpen ? "rotate-180" : ""
+              }`}
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M19 9l-7 7-7-7"
+              />
+            </svg>
+          </button>
+
+          <AnimatePresence>
+            {isDropdownOpen && (
+              <motion.ul
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -10 }}
+                transition={{ duration: 0.2 }}
+                className="absolute left-0 mt-2 w-60 bg-[#1a1a1a] rounded-md shadow-lg z-50 text-left"
+              >
+                {plans.map((plan) => (
+                  <li
+                    key={plan.name}
+                    onClick={() => handleSelectChange(plan.name)}
+                    className={`px-5 py-3 cursor-pointer hover:bg-[#9a753e]/40 rounded-md transition-all ${
+                      selectedPlan === plan.name ? "bg-[#9a753e]/30" : ""
+                    }`}
+                  >
+                    {plan.name}
+                  </li>
+                ))}
+              </motion.ul>
+            )}
+          </AnimatePresence>
+        </div>
+
+        {/* --- Plan Buttons (for desktop) --- */}
+        <div className="hidden md:flex flex-wrap justify-center items-center gap-4 mb-10">
           {plans.map((p) => (
             <button
               key={p.name}
@@ -121,7 +174,7 @@ export default function PricingClient() {
           ))}
         </div>
 
-        {/* --- Desktop (static cards) --- */}
+        {/* --- Desktop Cards --- */}
         <div className="hidden lg:flex justify-center items-start gap-10">
           {plans.map((plan) => (
             <motion.div
@@ -153,7 +206,7 @@ export default function PricingClient() {
           ))}
         </div>
 
-        {/* --- Mobile/Tablet (scrollable container) --- */}
+        {/* --- Mobile Scrollable Cards --- */}
         <div
           ref={scrollContainerRef}
           className="lg:hidden flex overflow-x-auto md:gap-6 gap-4 md:px-8 py-6 mb-16 snap-x snap-mandatory scroll-smooth [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]"

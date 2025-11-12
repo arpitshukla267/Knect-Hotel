@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Header from "@/components/sections/Header";
@@ -116,7 +116,6 @@ const fadeUpVariants = {
   },
 };
 
-// ✅ Separate component for each news card
 function NewsCard({ news, onSelect }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, amount: 0.2 });
@@ -130,12 +129,7 @@ function NewsCard({ news, onSelect }) {
       className="bg-white/10 backdrop-blur-xl border border-white/15 rounded-2xl overflow-hidden hover:bg-white/15 transition-all duration-300 max-w-sm"
     >
       <div className="relative h-48 w-full">
-        <Image
-          src={news.image}
-          alt={news.title}
-          fill
-          className="object-cover"
-        />
+        <Image src={news.image} alt={news.title} fill className="object-cover" />
       </div>
       <div className="p-5">
         <div className="flex items-center justify-between mb-2">
@@ -164,7 +158,6 @@ export default function NewsPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedNews, setSelectedNews] = useState(null);
   const containerRef = useRef(null);
-  const isInView = useInView(containerRef, { once: true, amount: 0.2 });
 
   const totalPages = Math.ceil(newsItems.length / itemsPerPage);
   const currentItems = newsItems.slice(
@@ -172,6 +165,29 @@ export default function NewsPage() {
     currentPage * itemsPerPage
   );
 
+  // 🧠 Prevent background scroll when popup is open
+  useEffect(() => {
+    let scrollY;
+    if (selectedNews) {
+      scrollY = window.scrollY;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${scrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.overflowY = "hidden";
+      document.body.style.width = "100%";
+    } else {
+      const y = document.body.style.top;
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.overflowY = "";
+      document.body.style.width = "";
+      if (y) window.scrollTo(0, parseInt(y || "0") * -1);
+    }
+  }, [selectedNews]);
+  
   return (
     <div
       className="min-h-screen w-full text-white flex flex-col items-center"
@@ -242,32 +258,35 @@ export default function NewsPage() {
                 animate={{ scale: 1, opacity: 1 }}
                 exit={{ scale: 0.9, opacity: 0 }}
                 transition={{ duration: 0.3 }}
-                className="bg-white/10 backdrop-blur-2xl border border-white/15 rounded-2xl p-6 sm:p-8 max-w-lg w-full text-center relative"
+                className="bg-white/10 backdrop-blur-2xl border border-white/15 rounded-2xl w-full max-w-lg relative flex flex-col max-h-[70vh] md:max-h-[85vh] overflow-hidden"
               >
                 <button
                   onClick={() => setSelectedNews(null)}
-                  className="absolute top-4 right-4 text-white/90 hover:text-white text-2xl font-bold transition-transform hover:scale-110"
+                  className="absolute top-3 right-4 text-white/90 hover:text-white text-2xl font-bold transition-transform hover:scale-110"
                   aria-label="Close"
                 >
                   ×
                 </button>
 
-                <Image
-                  src={selectedNews.image}
-                  alt={selectedNews.title}
-                  width={600}
-                  height={400}
-                  className="rounded-lg mb-4 mx-auto object-cover"
-                />
-                <h2 className="text-2xl sm:text-3xl marcellus mb-3">
-                  {selectedNews.title}
-                </h2>
-                <p className="text-sm text-white/80 mb-2">
-                  {selectedNews.date} — {selectedNews.source}
-                </p>
-                <p className="text-white/90 text-base leading-relaxed manrope-regular">
-                  {selectedNews.description}
-                </p>
+                {/* Scrollable inner content */}
+                <div className="overflow-y-auto px-6 sm:px-8 pt-6 pb-8 scroll-smooth custom-scrollbar">
+                  <Image
+                    src={selectedNews.image}
+                    alt={selectedNews.title}
+                    width={600}
+                    height={400}
+                    className="rounded-lg mb-4 mx-auto object-cover"
+                  />
+                  <h2 className="text-2xl sm:text-3xl marcellus mb-3">
+                    {selectedNews.title}
+                  </h2>
+                  <p className="text-sm text-white/80 mb-2">
+                    {selectedNews.date} — {selectedNews.source}
+                  </p>
+                  <p className="text-white/90 text-base leading-relaxed manrope-regular">
+                    {selectedNews.description}
+                  </p>
+                </div>
               </motion.div>
             </motion.div>
           )}

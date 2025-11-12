@@ -24,9 +24,9 @@ export default function Page() {
     >
       <Header />
 
-      <div className="w-[90%] md:w-[80%] mt-20 relative">
+      <div className="w-[90%] md:w-[80%] my-24 md:my-20 relative">
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl text-center marcellus text-white mb-16">
+        <h1 className="text-4xl md:text-5xl text-center marcellus text-white mb-6 md:mb-16">
           A<span className="text-2xl md:text-3xl">BOUT</span> K
           <span className="text-2xl md:text-3xl">NECTHOTEL</span>
         </h1>
