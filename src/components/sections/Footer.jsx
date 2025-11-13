@@ -11,12 +11,12 @@ export default function Footer() {
       {/* App Downloads */}
       <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
         {/* PMS App */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold text-white mb-3">
-            Download PMS App
+            Download App from Google Play
           </h3>
           <div className="flex gap-3 flex-wrap">
-            <a
+            {/* <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
             >
@@ -24,7 +24,7 @@ export default function Footer() {
               <span className="text-sm text-white font-medium">
                 App Store
               </span>
-            </a>
+            </a> */}
             <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
@@ -38,9 +38,9 @@ export default function Footer() {
         </div>
 
         {/* POS App */}
-        <div>
+        <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold text-white mb-3">
-            Download POS App
+            Download App from App Store
           </h3>
           <div className="flex gap-3 flex-wrap">
             <a
@@ -52,7 +52,7 @@ export default function Footer() {
                 App Store
               </span>
             </a>
-            <a
+            {/* <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
             >
@@ -60,55 +60,55 @@ export default function Footer() {
               <span className="text-sm text-white font-medium">
                 Google Play
               </span>
-            </a>
+            </a> */}
           </div>
         </div>
 
         {/* Contact */}
-        <div className="text-left md:text-left lg:text-right">
+        <div className="text-left md:text-left lg:text-center">
           <h3 className="text-lg font-semibold text-white mb-4 md:mb-2">Contact</h3>
-          <a href="mailto:shuklaarpit440@gmail.com" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-end">
+          <a href="mailto:shuklaarpit440@gmail.com" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-center">
             <Mail size={16} /> info@knecthotel.com
           </a>
-          <a href="tel:+919720191991" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-end mt-1">
+          <a href="tel:+919720191991" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-center mt-1">
             <Phone size={16} /> +91 9720191991
           </a>
-          <a href="tel:01206053168" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-end mt-1">
+          <a href="tel:01206053168" className="text-sm flex items-center gap-2 justify-start md:justify-start lg:justify-center mt-1">
             <Headphones size={16} /> +0120 6053168
           </a>
         </div>
       </div>
 
       {/* Awards Section */}
-<div className="border-t border-gray-800 py-10">
-  <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 items-center text-center">
-    {[
-      { src: "/logo-startupindia.jpeg", name: "Startup India" },
-      { src: "/logo-startinup.jpeg", name: "Start In Up" },
-      { src: "/logo-msme.jpeg", name: "MSME" },
-      { src: "/logo-iso.jpeg", name: "ISO" },
-    ].map((logo, i) => (
-      <div
-        key={i}
-        className="flex flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 lg:w-[15%]"
-      >
-        <div className="relative w-full aspect-square">
-          <Image
-            src={logo.src}
-            alt={logo.name}
-            fill
-            className="object-contain"
-          />
+      <div className="border-t border-gray-800 py-0 bg-white">
+        <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 items-center text-center">
+          {[
+            { src: "/logo-startupindia.jpeg", name: "Startup India" },
+            { src: "/logo-startinup.jpeg", name: "StartinUP" },
+            { src: "/logo-msme.png", name: "MSME" },
+            { src: "/logo-iso.jpeg", name: "ISO" },
+          ].map((logo, i) => (
+            <div
+              key={i}
+              className="flex flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 lg:w-[15%]"
+            >
+              <div className="relative w-full aspect-square">
+                <Image
+                  src={logo.src}
+                  alt={logo.name}
+                  fill
+                  className="object-contain"
+                />
+              </div>
+              <p className="mb-4 text-lg text-black manrope-bold">{logo.name}</p>
+            </div>
+          ))}
         </div>
-        <p className="mt-2 text-lg font-semibold text-white">{logo.name}</p>
       </div>
-    ))}
-  </div>
-</div>
 
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800 py-6 text-sm">
+      <div className="border-t border-gray-800 py-8 text-sm">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-3">
           <div className="flex gap-3 text-center md:gap-6 text-gray-400">
             <a href="/about" className="hover:text-[#D4AF37] transition">About</a>
@@ -119,7 +119,7 @@ export default function Footer() {
           </div>
           <p className="text-gray-500">
             © {new Date().getFullYear()}{" "}
-            <span className="text-[#D4AF37] font-semibold">Knect Hotel</span> Inc.
+            <span className="text-[#D4AF37] font-semibold">KnectHotel</span> Inc.
           </p>
         </div>
       </div>
