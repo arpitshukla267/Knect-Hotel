@@ -7,9 +7,15 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#0A0A0A] text-gray-300 border-t border-gray-800">
+    <footer className="relative text-gray-300 border-t"
+            style={{
+              background:
+                "radial-gradient(circle at 50% 0%, rgba(255, 200, 120, 0.25), rgba(0, 0, 0, 1))",
+              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+            }}
+    >
       {/* App Downloads */}
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10 ">
         {/* PMS App */}
         <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold text-white mb-3">
@@ -80,17 +86,17 @@ export default function Footer() {
       </div>
 
       {/* Awards Section */}
-      <div className="border-t border-gray-800 py-0 bg-white">
+      <div className="border-t border-gray-800 bg-white">
         <div className="max-w-7xl mx-auto px-6 flex flex-wrap justify-center md:justify-between gap-8 items-center text-center">
           {[
-            { src: "/logo-startupindia.jpeg", name: "Startup India" },
-            { src: "/logo-startinup.jpeg", name: "StartinUP" },
-            { src: "/logo-msme.png", name: "MSME" },
-            { src: "/logo-iso.jpeg", name: "ISO" },
+            { src: "/logo-startupindia.jpeg", name: "" },
+            { src: "/logo-startinup.jpeg", name: "" },
+            { src: "/logo-msme.png", name: "" },
+            { src: "/logo-iso.jpeg", name: "" },
           ].map((logo, i) => (
             <div
               key={i}
-              className="flex flex-col items-center justify-center w-1/2 sm:w-1/3 md:w-1/5 lg:w-[15%]"
+              className="flex flex-col items-center justify-center w-1/3 md:w-1/5 lg:w-[15%]"
             >
               <div className="relative w-full aspect-square">
                 <Image
@@ -100,7 +106,7 @@ export default function Footer() {
                   className="object-contain"
                 />
               </div>
-              <p className="mb-4 text-lg text-black manrope-bold">{logo.name}</p>
+              <p className="text-lg text-black manrope-bold">{logo.name}</p>
             </div>
           ))}
         </div>
@@ -108,7 +114,7 @@ export default function Footer() {
 
 
       {/* Bottom Bar */}
-      <div className="border-t border-gray-800 py-8 text-sm">
+      <div className="border-t border-gray-800 py-4 text-sm">
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6 md:gap-3">
           <div className="flex gap-3 text-center md:gap-6 text-gray-400">
             <a href="/about" className="hover:text-[#D4AF37] transition">About</a>
