@@ -71,9 +71,9 @@ export default function Review() {
     <div
       suppressHydrationWarning
       className="flex flex-col items-center justify-center min-h-screen py-12 px-4 text-white overflow-hidden"
-      style={{
-        background: 'radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)',
-      }}
+      // style={{
+      //   background: 'radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)',
+      // }}
     >
       <h2 className="text-3xl sm:text-4xl lg:text-5xl marcellus mb-10 text-center leading-tight">
         What Our Guests Say

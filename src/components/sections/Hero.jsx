@@ -33,15 +33,15 @@ function Hero() {
         </h1>
 
         <div className="mt-8 flex lg:flex-row flex-col items-start gap-6">
-          <div className="flex space-x-4">
+          <div className="flex flex-col md:flex-row space-y-4 md:space-x-4">
             <Link href="/login">
-              <button className="bg-[#ba9655] hover:bg-yellow-700 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
+              <button className="bg-[#ba9655] hover:bg-yellow-700 text-white px-3 py-2 text-md md:text-base md:px-6 md:py-3 marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
                 Get Started for Free
               </button>
             </Link>
           
             <Link href="/login">
-              <button className="bg-[#ba9655] hover:bg-yellow-600 text-white px-6 py-3 marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
+              <button className="bg-[#ba9655] hover:bg-yellow-600 text-white md:px-6 px-3 py-2 md:py-3 text-md md:text-base marcellus-sc rounded-lg font-medium shadow-lg transition hover:cursor-pointer">
                 Book a Demo
               </button>
             </Link>

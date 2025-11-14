@@ -5,19 +5,108 @@ import { useBlog } from "@/context/BlogContext";
 import Link from "next/link";
 import Image from "next/image";
 import Header from "@/components/sections/Header";
+import { MapPin, Star } from "lucide-react";
+
+// -----------------------------------------------------------
+// DUMMY BLOG DATA (MUST BE AT THE TOP)
+// -----------------------------------------------------------
+const dummyBlogs = [
+  {
+    id: 1,
+    title: "AI Is Reshaping Hospitality Faster Than Ever",
+    slug: "ai-reshaping-hospitality",
+    image: "https://images.unsplash.com/photo-1557683304-673a23048d34?w=800",
+    description:
+      "How automation is redefining workflows, enhancing guest experience, and transforming hotel operations."
+  },
+  {
+    id: 2,
+    title: "Future of Smart Property Management Systems",
+    slug: "future-of-pms",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
+    description:
+      "Exploring the next generation of cloud-native PMS tools powering hotels worldwide."
+  },
+  {
+    id: 3,
+    title: "Digital Guest Onboarding Beats Traditional Check-ins",
+    slug: "digital-guest-onboarding",
+    image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800",
+    description:
+      "Contactless onboarding is essential for frictionless guest arrival and faster check-ins."
+  },
+  {
+    id: 4,
+    title: "How Gen Z Travelers Are Redefining Tourism",
+    slug: "gen-z-travel-trends",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800",
+    description:
+      "Understanding the digital-first generation shaping the future of travel behavior."
+  },
+  {
+    id: 5,
+    title: "Automation Playbook for Small Hotels",
+    slug: "automation-playbook-small-properties",
+    image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800",
+    description:
+      "Simple tools and strategies for boosting efficiency in small hospitality businesses."
+  },
+  {
+    id: 6,
+    title: "Smart Energy Systems for Hotels in 2025",
+    slug: "smart-energy-hotels",
+    image: "https://images.unsplash.com/photo-1582719478181-2f2b39f7a3b9?w=800",
+    description:
+      "IoT-powered automation is cutting energy costs and reducing carbon footprints across properties."
+  },
+  {
+    id: 7,
+    title: "Mobile Apps Are Driving Guest Loyalty",
+    slug: "mobile-app-guest-loyalty",
+    image: "https://images.unsplash.com/photo-1522199710521-72d69614c702?w=800",
+    description:
+      "Hotels are earning more repeat guests thanks to personalized app experiences."
+  },
+  {
+    id: 8,
+    title: "The Psychology Behind Perfect Guest Experience",
+    slug: "guest-experience-psychology",
+    image: "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800",
+    description:
+      "How emotional design and experience mapping elevate hospitality service."
+  },
+  {
+    id: 9,
+    title: "Smart Multi-Property Management Solutions",
+    slug: "multi-property-management",
+    image: "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800",
+    description:
+      "How hotel chains sync operations, data, and processes seamlessly using modern systems."
+  },
+  {
+    id: 10,
+    title: "Top Hospitality Tech Trends for 2025",
+    slug: "hospitality-tech-2025",
+    image: "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800",
+    description:
+      "The biggest innovations redefining hotels, hostels, and rentals this year."
+  }
+];
 
 export default function BlogPage() {
-  const { blogs } = useBlog();
+  // ignoring context blogs entirely for now
+  const allBlogs = dummyBlogs;
+
   const [currentPage, setCurrentPage] = useState(1);
-  const blogsPerPage = 4;
-  const totalPages = Math.ceil(blogs.length / blogsPerPage);
+  const blogsPerPage = 6;
+  const totalPages = Math.ceil(allBlogs.length / blogsPerPage);
 
   const startIndex = (currentPage - 1) * blogsPerPage;
-  const paginatedBlogs = blogs.slice(startIndex, startIndex + blogsPerPage);
+  const paginatedBlogs = allBlogs.slice(startIndex, startIndex + blogsPerPage);
 
   const fadeUp = {
     hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 },
+    visible: { opacity: 1, y: 0 }
   };
 
   const handlePageChange = (page) => {
@@ -65,37 +154,53 @@ export default function BlogPage() {
     <div
       className="min-h-screen w-full text-white"
       style={{
-        background:
-          "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)"
       }}
     >
       <Header />
 
-      {/* ---------------- Banner ---------------- */}
-      <section className="relative w-full pt-28 pb-6 flex flex-col justify-center items-center text-center overflow-hidden">
-        {/* Animated background like Section 3 */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_30%,#9a753e22,transparent_70%)] animate-gradientMove"></div>
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_70%,#9a753e15,transparent_70%)] animate-gradientMove-slow"></div>
+      {/* HEADER SECTION */}
+      <motion.div
+        className="relative bg-black/40 backdrop-blur-md border-b border-yellow-800/40 shadow-lg"
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, ease: "easeOut" }}
+      >
+        <div className="max-w-7xl mx-auto px-6 py-24 md:py-32 text-center">
+          <motion.h1
+            className="text-3xl md:text-6xl font-extrabold text-[#E2C994] mb-4 md:mb-6 tracking-wider"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 1.2 }}
+          >
+            KNECT Blogs
+          </motion.h1>
 
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1 }}
-          className="text-4xl md:text-6xl font-extrabold text-[#d3b87d] mb-4 z-10"
-        >
-          Our Latest Insights
-        </motion.h1>
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.3 }}
-          className="text-gray-300 text-sm md:text-lg max-w-2xl z-10"
-        >
-          Explore ideas, innovations, and hospitality tech shaping tomorrow’s guest experience.
-        </motion.p>
-      </section>
+          <motion.p
+            className="text-gray-200 text-md md:text-lg max-w-2xl mx-auto mb-4"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.2 }}
+          >
+            Insights curated for hospitality innovators, creators, operators,
+            and tech-driven disruptors.
+          </motion.p>
 
-      {/* ---------------- Blog Cards ---------------- */}
+          <motion.p
+            className="text-gray-400 max-w-3xl mx-auto text-sm md:text-base"
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.4 }}
+          >
+            Dive into trends, strategies, and stories shaping the future of
+            guest experience, automation, and property intelligence.
+          </motion.p>
+        </div>
+
+        <div className="h-[2px] w-full bg-gradient-to-r from-transparent via-[#E2C994] to-transparent" />
+      </motion.div>
+
+      {/* BLOG GRID */}
       <section className="relative py-10 px-4 md:px-16 overflow-hidden">
         <div className="absolute -top-40 left-1/2 transform -translate-x-1/2 w-[600px] h-[600px] bg-[#9a753e33] blur-[150px] rounded-full opacity-40 pointer-events-none"></div>
 
@@ -118,7 +223,7 @@ export default function BlogPage() {
           </AnimatePresence>
         </motion.div>
 
-        {/* Smooth pagination */}
+        {/* PAGINATION */}
         <motion.div
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}

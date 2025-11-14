@@ -16,9 +16,9 @@ export default function Blog() {
   return (
     <section
       className="flex flex-col justify-center items-center text-center text-white py-16 sm:py-20 px-4 sm:px-8 overflow-hidden"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
-      }}
+      // style={{
+      //   background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
+      // }}
     >
       <motion.h1
         variants={fadeUp}

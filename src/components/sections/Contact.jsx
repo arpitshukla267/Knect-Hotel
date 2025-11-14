@@ -6,10 +6,10 @@ import { Vortex } from "../ui/vortex";
 export default function Contact() {
   return (
     <div
-      className="relative min-h-screen text-white overflow-hidden"
-      style={{
-        background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
-      }}
+      className="relative min-h-screen text-white overflow-hidden bg-black"
+      // style={{
+      //   background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
+      // }}
     >
       <Vortex
         particleCount={800}
@@ -24,7 +24,7 @@ export default function Contact() {
           {/* Title */}
           <div className="backdrop-blur-lg bg-white/5 border border-[#9a753e]/40 px-6 py-4 md:px-20 md:py-10 rounded-full shadow-[0_0_30px_rgba(154,117,62,0.4)]">
             <h1
-              className="text-3xl md:text-8xl tracking-wide uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#f5e0c1] to-[#9a753e]"
+              className="text-3xl md:text-8xl tracking-wide uppercase text-white"
               style={{
                 fontFamily: "var(--font-montserrat-alt)",
                 fontWeight: 600,

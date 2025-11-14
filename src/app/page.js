@@ -33,10 +33,18 @@ function Page() {
         <Header />
         <Hero />
         <CentralizedServices />
+        <div          style={{
+           background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
+         }}>
         <HotelGallery />
         <Integration />
+        </div>
+        <div          style={{
+           background: "radial-gradient(circle at 50% 50%, #9a753e -50%, #000000 100%)",
+         }}>
         <Blog />
         <Review />
+        </div>
         <Contact />
       </div>
     </div>

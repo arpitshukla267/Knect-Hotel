@@ -7,22 +7,22 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <footer className="relative text-gray-300 border-t"
-            style={{
-              background:
-                "radial-gradient(circle at 50% 0%, rgba(255, 200, 120, 0.25), rgba(0, 0, 0, 1))",
-              borderTop: "1px solid rgba(255, 255, 255, 0.1)"
-            }}
+    <footer className="relative text-gray-300 border-t border-white/20 bg-black"
+            // style={{
+            //   background:
+            //     "radial-gradient(circle at 50% 0%, rgba(255, 200, 120, 0.25), rgba(0, 0, 0, 1))",
+            //   borderTop: "1px solid rgba(255, 255, 255, 0.1)"
+            // }}
     >
       {/* App Downloads */}
-      <div className="max-w-7xl mx-auto px-6 py-10 grid grid-cols-1 md:grid-cols-3 gap-10 ">
+      <div className="max-w-7xl mx-auto px-6 py-10 flex justify-around gap-10 ">
         {/* PMS App */}
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-left">
           <h3 className="text-lg font-semibold text-white mb-3">
-            Download App from Google Play
+            Download our App 
           </h3>
           <div className="flex gap-3 flex-wrap">
-            {/* <a
+            <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
             >
@@ -30,7 +30,7 @@ export default function Footer() {
               <span className="text-sm text-white font-medium">
                 App Store
               </span>
-            </a> */}
+            </a>
             <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
@@ -44,7 +44,7 @@ export default function Footer() {
         </div>
 
         {/* POS App */}
-        <div className="flex flex-col items-center">
+        {/* <div className="flex flex-col items-center">
           <h3 className="text-lg font-semibold text-white mb-3">
             Download App from App Store
           </h3>
@@ -58,7 +58,7 @@ export default function Footer() {
                 App Store
               </span>
             </a>
-            {/* <a
+            <a
               href="#"
               className="flex items-center gap-2 border border-gray-700 rounded-lg px-4 py-2 hover:border-[#D4AF37] transition"
             >
@@ -66,9 +66,9 @@ export default function Footer() {
               <span className="text-sm text-white font-medium">
                 Google Play
               </span>
-            </a> */}
+            </a>
           </div>
-        </div>
+        </div> */}
 
         {/* Contact */}
         <div className="text-left md:text-left lg:text-center">

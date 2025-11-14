@@ -6,12 +6,152 @@ import { motion } from "framer-motion";
 import Header from "@/components/sections/Header";
 import { useState } from "react";
 import { FiStar, FiYoutube, FiInstagram, FiLink } from "react-icons/fi";
+// --- Dummy Blog Data (for BlogDetail page) ---
+const dummyBlogDetails = [
+  {
+    id: 1,
+    title: "AI Is Reshaping Hospitality Faster Than Ever",
+    slug: "ai-reshaping-hospitality",
+    image: "https://images.unsplash.com/photo-1557683304-673a23048d34?w=800",
+    description:
+      "How automation is redefining workflows, enhancing guest experience, and transforming hotel operations.",
+    content:
+      "Automation and AI are driving the next big leap in hospitality, enabling smart workflows, real-time service personalization, and predictive maintenance systems. Hotels adopting AI-first strategies are delivering faster check-ins, tailored guest journeys, and optimized resource allocation.",
+    contributor: "Arjun Mehta",
+    date: "Jan 12, 2025",
+  },
+
+  {
+    id: 2,
+    title: "Future of Smart Property Management Systems",
+    slug: "future-of-pms",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=800",
+    description:
+      "A deep dive into next-gen PMS platforms, automation, and cloud-native hotel operations.",
+    content:
+      "Modern PMS solutions integrate automation, analytics, and mobile-first design, creating efficient workflows for front-desk, housekeeping, and revenue management. Cloud-native platforms are reducing maintenance costs while enabling multi-property scalability.",
+    contributor: "Neha Kapoor",
+    date: "Feb 3, 2025",
+  },
+
+  {
+    id: 3,
+    title: "Digital Guest Onboarding Beats Traditional Check-ins",
+    slug: "digital-guest-onboarding",
+    image: "https://images.unsplash.com/photo-1538688525198-9b88f6f53126?w=800",
+    description:
+      "Why digital check-ins are becoming the new default in global hospitality.",
+    content:
+      "Digital onboarding delivers faster processing, reduces errors, and streamlines identity verification. With automated pre-arrival forms, access codes, and mobile key systems, hotels are enhancing guest convenience while lowering operational load.",
+    contributor: "Rohan Sharma",
+    date: "Mar 8, 2025",
+  },
+
+  {
+    id: 4,
+    title: "How Gen Z Travelers Are Redefining Tourism",
+    slug: "gen-z-travel-trends",
+    image: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800",
+    description:
+      "A breakdown of Gen Z behavior and how it influences modern travel experiences.",
+    content:
+      "Gen Z customers value authenticity, social experiences, and digital convenience. They prefer experiential stays, eco-friendly properties, and community-driven hostels with mobile-first services that integrate seamlessly with their lifestyle.",
+    contributor: "Sara Nambiar",
+    date: "Jan 29, 2025",
+  },
+
+  {
+    id: 5,
+    title: "Automation Playbook for Small Hotels",
+    slug: "automation-playbook-small-properties",
+    image: "https://images.unsplash.com/photo-1519710164239-da123dc03ef4?w=800",
+    description:
+      "Simple automation strategies for small properties to double efficiency.",
+    content:
+      "Small hotels can implement automation through digital check-ins, automated billing, AI chatbots, and simplified task management tools. These solutions reduce overhead and free staff to focus on personalized guest interactions.",
+    contributor: "Aman Verma",
+    date: "Feb 14, 2025",
+  },
+
+  {
+    id: 6,
+    title: "Smart Energy Systems for Hotels in 2025",
+    slug: "smart-energy-hotels",
+    image:
+      "https://images.unsplash.com/photo-1582719478181-2f2b39f7a3b9?w=800",
+    description:
+      "IoT-powered automation is cutting energy costs and reducing carbon footprints across properties.",
+    content:
+      "Hotels are rapidly switching to smart thermostats, occupancy-based lighting, and AI-driven HVAC systems. These technologies help properties automate energy consumption, reduce waste, and meet sustainability standards.",
+    contributor: "Ishan Bhatt",
+    date: "Feb 20, 2025",
+  },
+
+  {
+    id: 7,
+    title: "Mobile Apps Are Driving Guest Loyalty",
+    slug: "mobile-app-guest-loyalty",
+    image:
+      "https://images.unsplash.com/photo-1522199710521-72d69614c702?w=800",
+    description:
+      "Hotels are earning more repeat guests thanks to personalized mobile-first experiences.",
+    content:
+      "Loyalty-based mobile apps help hotels deliver real-time notifications, rewards, in-app booking, and personalized offers. As a result, digital touchpoints are becoming essential to guest engagement strategies.",
+    contributor: "Nikita Rao",
+    date: "Mar 2, 2025",
+  },
+
+  {
+    id: 8,
+    title: "The Psychology Behind Perfect Guest Experience",
+    slug: "guest-experience-psychology",
+    image:
+      "https://images.unsplash.com/photo-1519681393784-d120267933ba?w=800",
+    description:
+      "How emotional design and experience mapping elevate hospitality service.",
+    content:
+      "Guest experience success comes from understanding human psychology—comfort, trust, anticipation, and emotional satisfaction. Hotels that apply behavioral design principles see higher reviews and stronger brand loyalty.",
+    contributor: "Harleen Gupta",
+    date: "Jan 18, 2025",
+  },
+
+  {
+    id: 9,
+    title: "Smart Multi-Property Management Solutions",
+    slug: "multi-property-management",
+    image:
+      "https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=800",
+    description:
+      "How hotel chains sync operations, data, and processes using modern systems.",
+    content:
+      "Centralized management systems allow hotel groups to unify billing, housekeeping, reporting, and CRM in a single interface. Automation reduces inconsistencies and improves operational alignment across locations.",
+    contributor: "Dev Khanna",
+    date: "Mar 15, 2025",
+  },
+
+  {
+    id: 10,
+    title: "Top Hospitality Tech Trends for 2025",
+    slug: "hospitality-tech-2025",
+    image:
+      "https://images.unsplash.com/photo-1504384308090-c894fdcc538d?w=800",
+    description:
+      "The biggest innovations redefining hotels, hostels, and rentals this year.",
+    content:
+      "AI, robotics, IoT devices, immersive AR experiences, and smart PMS platforms are transforming hospitality in 2025. Properties adopting these innovations are gaining a competitive advantage.",
+    contributor: "Mahira Singh",
+    date: "Feb 7, 2025",
+  }
+];
+
 
 export default function BlogDetail() {
   const { slug } = useParams();
   const { blogs } = useBlog();
-  const blog = blogs.find((b) => b.slug === slug);
+  const allBlogs = dummyBlogDetails;
+  const blog = allBlogs.find((b) => b.slug === slug);  
   const [rating, setRating] = useState(0);
+ 
 
   if (!blog) {
     return (
@@ -51,7 +191,7 @@ export default function BlogDetail() {
           initial={{ opacity: 0, y: 40 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="text-4xl md:text-6xl font-extrabold text-[#d3b87d] mb-2 z-10"
+          className="max-w-6xl mx-auto text-4xl md:text-6xl font-extrabold text-[#d3b87d] mb-6 z-10"
         >
           {blog.title}
         </motion.h1>

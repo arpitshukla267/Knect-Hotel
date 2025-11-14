@@ -65,11 +65,15 @@ export default function CentralizedServices() {
   const descRefs = useRef([]);
   const logoRefs = useRef([]);
   const buttonRefs = useRef([]);
+  const imageContainerRef = useRef(null);
 
   useEffect(() => {
     ScrollTrigger.getAll().forEach((t) => t.kill());
 
-    sectionRefs.current.forEach((section, index) => {
+    // Create a master ScrollTrigger that tracks which section is most visible
+    const sections = sectionRefs.current.filter(Boolean);
+    
+    sections.forEach((section, index) => {
       if (!section) return;
 
       const heading = headingRefs.current[index];
@@ -83,22 +87,33 @@ export default function CentralizedServices() {
 
       ScrollTrigger.create({
         trigger: section,
-        start: "top 70%",
-        end: "bottom 15%",
+        start: "top 60%",
+        end: "bottom 20%",
         toggleActions: "play none none reverse",
         onEnter: () => {
-          gsap.to(elements, { color: "#ffffff", duration: 0.4, ease: "power2.out" });
-          setActiveIndex(index);
+          gsap.to(elements, { color: "#ffffff", duration: 0.3, ease: "power2.out" });
+          // Immediately update active index for better sync
+          requestAnimationFrame(() => {
+            setActiveIndex(index);
+          });
         },
         onEnterBack: () => {
-          gsap.to(elements, { color: "#ffffff", duration: 0.4, ease: "power2.out" });
-          setActiveIndex(index);
+          gsap.to(elements, { color: "#ffffff", duration: 0.3, ease: "power2.out" });
+          requestAnimationFrame(() => {
+            setActiveIndex(index);
+          });
         },
         onLeave: () => {
-          gsap.to(elements, { color: "#888888", duration: 0.4, ease: "power2.out" });
+          gsap.to(elements, { color: "#888888", duration: 0.3, ease: "power2.out" });
         },
         onLeaveBack: () => {
-          gsap.to(elements, { color: "#888888", duration: 0.4, ease: "power2.out" });
+          gsap.to(elements, { color: "#888888", duration: 0.3, ease: "power2.out" });
+        },
+        // Use onUpdate to ensure perfect sync
+        onUpdate: (self) => {
+          if (self.isActive && self.progress > 0.2) {
+            setActiveIndex(index);
+          }
         },
       });
     });
@@ -144,7 +159,7 @@ export default function CentralizedServices() {
       }}
     >
       {/* Left: Text sections */}
-      <div className="relative flex-1 text-[#888888] overflow-hidden">
+      <div className="relative flex-1 text-white overflow-hidden">
         {/* Background accent glows */}
         <div className="absolute inset-0 opacity-20 pointer-events-none">
           <div className="absolute -top-40 -left-20 w-[500px] h-[500px] bg-[#9a753e44] blur-[180px] rounded-full"></div>
@@ -155,53 +170,97 @@ export default function CentralizedServices() {
           <div
             key={i}
             ref={(el) => (sectionRefs.current[i] = el)}
-            className="relative h-auto md:h-[90vh] flex flex-col justify-center md:justify-center px-6 sm:px-12 lg:px-28 py-10 md:pt-10 mobile-slide"
+            className="relative h-auto md:h-[90vh] flex flex-col justify-center md:justify-center px-6 sm:px-12 lg:px-28 py-16 md:py-20 mobile-slide"
           >
-            <div className="max-w-2xl space-y-6 relative z-10">
-              <h1
-                ref={(el) => (headingRefs.current[i] = el)}
-                className="marcellus text-2xl sm:text-3xl md:text-5xl leading-tight transition-colors duration-300"
-              >
-                {service.heading}
-              </h1>
-              <p
-                ref={(el) => (descRefs.current[i] = el)}
-                className="text-base sm:text-lg md:text-xl leading-relaxed marcellus-sc transition-colors duration-300"
-              >
-                {service.description}
-              </p>
+            {/* Section Number Badge */}
+            <div className="absolute top-8 md:top-12 left-6 sm:left-12 lg:left-28 z-20">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 md:w-16 md:h-16 rounded-full border-2 border-[#9a753e]/50 bg-gradient-to-br from-[#9a753e]/20 to-transparent flex items-center justify-center backdrop-blur-sm">
+                  <span className="text-[#9a753e] text-lg md:text-2xl font-bold marcellus">{i + 1}</span>
+                </div>
+                <div className="h-px w-16 md:w-24 bg-gradient-to-r from-[#9a753e]/50 to-transparent"></div>
+              </div>
+            </div>
 
+            {/* Decorative corner accent */}
+            <div className="absolute top-0 left-0 w-32 h-32 opacity-10">
+              <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-[#9a753e] to-transparent"></div>
+              <div className="absolute top-0 left-0 w-px h-full bg-gradient-to-b from-[#9a753e] to-transparent"></div>
+            </div>
+
+            <div className="max-w-2xl space-y-8 relative z-10 mt-8 md:mt-0">
+              {/* Heading with decorative underline */}
+              <div className="space-y-4">
+                <h1
+                  ref={(el) => (headingRefs.current[i] = el)}
+                  className="marcellus text-3xl sm:text-4xl md:text-5xl leading-tight transition-colors duration-300 relative"
+                >
+                  {service.heading}
+                  <span className="absolute -bottom-2 left-0 w-20 h-0.5 bg-gradient-to-r from-[#9a753e] to-transparent opacity-60"></span>
+                </h1>
+              </div>
+
+              {/* Description with enhanced styling */}
+              <div className="relative pl-4 border-l-2 border-[#9a753e]/30">
+                <p
+                  ref={(el) => (descRefs.current[i] = el)}
+                  className="text-base sm:text-lg md:text-xl leading-relaxed marcellus-sc transition-colors duration-300"
+                >
+                  {service.description}
+                </p>
+              </div>
+
+              {/* Enhanced feature list */}
               {service.logo?.length > 0 && (
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3 pt-2 sm:pt-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5 pt-4 sm:pt-6">
                   {service.logo.map((item, idx) => (
-                    <p
+                    <div
                       key={idx}
-                      className="text-sm sm:text-lg transition-colors duration-300"
-                      ref={(el) => {
-                        if (!logoRefs.current[i]) logoRefs.current[i] = [];
-                        logoRefs.current[i][idx] = el;
-                      }}
+                      className="group flex items-start gap-3 p-3 rounded-lg bg-white/5 hover:bg-white/10 backdrop-blur-sm border border-white/10 hover:border-[#9a753e]/50 transition-all duration-300"
                     >
-                      • {item}
-                    </p>
+                      <div className="flex-shrink-0 mt-1">
+                        <div className="w-2 h-2 rounded-full bg-[#9a753e] group-hover:scale-150 transition-transform duration-300"></div>
+                      </div>
+                      <p 
+                        className="text-sm sm:text-base md:text-lg transition-colors duration-300 flex-1"
+                        ref={(el) => {
+                          if (!logoRefs.current[i]) logoRefs.current[i] = [];
+                          logoRefs.current[i][idx] = el;
+                        }}
+                      >
+                        {item}
+                      </p>
+                    </div>
                   ))}
                 </div>
               )}
 
+              {/* Enhanced button */}
               {service.buttonText && (
-                <Link
-                  href={"/login"}
-                  suppressHydrationWarning
-                  className="mt-4 px-6 py-3 bg-white/20 backdrop-blur-md hover:bg-white/30 hover:text-yellow-400 font-semibold rounded-lg transition-colors duration-300"
-                  ref={(el) => (buttonRefs.current[i] = el)}
-                >
-                  {service.buttonText}
-                </Link>
+                <div className="pt-4">
+                  <Link
+                    href={"/login"}
+                    suppressHydrationWarning
+                    className="group relative inline-flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-[#9a753e]/30 to-[#9a753e]/20 backdrop-blur-md border border-[#9a753e]/50 hover:border-[#9a753e] hover:from-[#9a753e]/40 hover:to-[#9a753e]/30 text-white font-semibold rounded-lg transition-all duration-300 overflow-hidden"
+                    ref={(el) => (buttonRefs.current[i] = el)}
+                  >
+                    <span className="relative z-10">{service.buttonText}</span>
+                    <svg 
+                      className="w-5 h-5 relative z-10 transform group-hover:translate-x-1 transition-transform duration-300" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                    </svg>
+                    <div className="absolute inset-0 bg-gradient-to-r from-[#9a753e]/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  </Link>
+                </div>
               )}
             </div>
 
             {/* ✅ Image below text on mobile only */}
-            <div className="block md:hidden w-full h-64 mt-6 relative rounded-xl overflow-hidden">
+            <div className="block md:hidden w-full h-64 mt-8 relative rounded-xl overflow-hidden border border-white/10 shadow-2xl">
               <Image
                 src={service.image}
                 alt={service.heading}
@@ -214,24 +273,50 @@ export default function CentralizedServices() {
       </div>
 
       {/* Right: Sticky Image (desktop only) */}
-      <div className="hidden md:block w-[50%] sticky top-0 h-screen overflow-hidden">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeIndex}
-            initial={{ opacity: 0, scale: 1 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1 }}
-            transition={{ duration: 0.2, ease: "easeInOut"  }}
-            className="relative w-full h-full my-auto"
-          >
-            <Image
-              src={services[activeIndex].image}
-              alt={services[activeIndex].heading}
-              fill
-              className="object-cover"
-            />
-          </motion.div>
-        </AnimatePresence>
+      <div className="hidden md:block w-[50%] sticky top-0 h-screen overflow-hidden" ref={imageContainerRef}>
+        <div className="relative w-full h-full flex items-center justify-center p-8">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -20 }}
+              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
+              className="relative w-full h-[85%] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+            >
+              <Image
+                src={services[activeIndex].image}
+                alt={services[activeIndex].heading}
+                fill
+                className="object-cover"
+                priority={activeIndex === 0}
+              />
+              {/* Subtle overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+            </motion.div>
+          </AnimatePresence>
+          
+          {/* Image indicator dots */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+            {services.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => {
+                  const section = sectionRefs.current[idx];
+                  if (section) {
+                    section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                  }
+                }}
+                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                  idx === activeIndex
+                    ? 'bg-[#9a753e] w-8'
+                    : 'bg-white/30 hover:bg-white/50'
+                }`}
+                aria-label={`Go to section ${idx + 1}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );
