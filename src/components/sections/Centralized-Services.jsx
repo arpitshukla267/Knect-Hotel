@@ -92,7 +92,7 @@ export default function CentralizedServices() {
         toggleActions: "play none none reverse",
         onEnter: () => {
           gsap.to(elements, { color: "#ffffff", duration: 0.3, ease: "power2.out" });
-          // Immediately update active index for better sync
+          // Immediately update active index for better sync - this triggers image change
           requestAnimationFrame(() => {
             setActiveIndex(index);
           });
@@ -109,7 +109,7 @@ export default function CentralizedServices() {
         onLeaveBack: () => {
           gsap.to(elements, { color: "#888888", duration: 0.3, ease: "power2.out" });
         },
-        // Use onUpdate to ensure perfect sync
+        // Use onUpdate to ensure perfect sync - update image when text color changes
         onUpdate: (self) => {
           if (self.isActive && self.progress > 0.2) {
             setActiveIndex(index);
@@ -272,32 +272,48 @@ export default function CentralizedServices() {
         ))}
       </div>
 
-      {/* Right: Sticky Image (desktop only) */}
+      {/* Right: Sticky Image (desktop only) - Enhanced with better transitions */}
       <div className="hidden md:block w-[50%] sticky top-0 h-screen overflow-hidden" ref={imageContainerRef}>
         <div className="relative w-full h-full flex items-center justify-center p-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeIndex}
-              initial={{ opacity: 0, scale: 0.95, y: 20 }}
-              animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.95, y: -20 }}
-              transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
-              className="relative w-full h-[85%] rounded-2xl overflow-hidden border border-white/10 shadow-2xl"
+              initial={{ opacity: 0, scale: 0.9, x: 50, rotateY: -15 }}
+              animate={{ opacity: 1, scale: 1, x: 0, rotateY: 0 }}
+              exit={{ opacity: 0, scale: 0.9, x: -50, rotateY: 15 }}
+              transition={{ 
+                duration: 0.6, 
+                ease: [0.4, 0, 0.2, 1],
+                opacity: { duration: 0.4 }
+              }}
+              className="relative w-full h-[85%] rounded-3xl overflow-hidden border-2 border-[#9a753e]/30 shadow-2xl group"
             >
               <Image
                 src={services[activeIndex].image}
                 alt={services[activeIndex].heading}
                 fill
-                className="object-cover"
+                className="object-cover transition-transform duration-700 group-hover:scale-110"
                 priority={activeIndex === 0}
               />
-              {/* Subtle overlay gradient */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent pointer-events-none"></div>
+              {/* Enhanced overlay gradient */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent pointer-events-none"></div>
+              
+              {/* Section indicator badge */}
+              <motion.div
+                className="absolute top-6 right-6 bg-gradient-to-r from-[#9a753e]/90 to-[#d3b87d]/90 backdrop-blur-md rounded-full px-4 py-2 border border-[#f5d9a1]/30 shadow-xl z-10"
+                initial={{ scale: 0, rotate: -180 }}
+                animate={{ scale: 1, rotate: 0 }}
+                transition={{ duration: 0.5, delay: 0.2, type: "spring" }}
+              >
+                <span className="text-white text-xs font-bold">
+                  {activeIndex + 1} / {services.length}
+                </span>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
           
-          {/* Image indicator dots */}
-          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-2 z-10">
+          {/* Enhanced Image indicator dots */}
+          <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex gap-3 z-10">
             {services.map((_, idx) => (
               <button
                 key={idx}
@@ -305,15 +321,25 @@ export default function CentralizedServices() {
                   const section = sectionRefs.current[idx];
                   if (section) {
                     section.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    // Immediately update active index for instant image change
+                    setActiveIndex(idx);
                   }
                 }}
-                className={`w-2 h-2 rounded-full transition-all duration-300 ${
+                className={`relative rounded-full transition-all duration-300 ${
                   idx === activeIndex
-                    ? 'bg-[#9a753e] w-8'
-                    : 'bg-white/30 hover:bg-white/50'
+                    ? 'bg-gradient-to-r from-[#9a753e] to-[#d3b87d] w-10 h-2 shadow-lg'
+                    : 'bg-white/30 hover:bg-white/50 w-2 h-2'
                 }`}
                 aria-label={`Go to section ${idx + 1}`}
-              />
+              >
+                {idx === activeIndex && (
+                  <motion.div
+                    className="absolute inset-0 bg-gradient-to-r from-[#d3b87d] to-[#f5d9a1] rounded-full"
+                    layoutId="activeIndicator"
+                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                  />
+                )}
+              </button>
             ))}
           </div>
         </div>

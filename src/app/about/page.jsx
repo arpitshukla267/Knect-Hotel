@@ -103,7 +103,6 @@ export default function Page() {
         {/* Story Section */}
         <motion.div
           variants={fadeUp}
-          initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           className="bg-[#9A753E] flex flex-col w-full sm:w-[85%] md:w-[80%] space-y-2 rounded-2xl px-6 sm:px-10 py-8 sm:pr-20 md:pr-44 text-white relative z-10 mt-20 sm:mt-28 shadow-md"
