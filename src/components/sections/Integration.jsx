@@ -148,7 +148,7 @@ export default function Integration() {
         variants={containerVariants}
         initial="hidden"
         whileInView="visible"
-        className="relative z-10 max-w-6xl mx-auto marcellus bg-gradient-to-br from-black/90 via-black/80 to-black/90 backdrop-blur-md rounded-3xl border-2 border-[#9a753e]/30 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-12 mt-20 p-12"
+        className="relative z-10 md:max-w-6xl mx-auto marcellus bg-gradient-to-br from-black/90 via-black/80 to-black/90 backdrop-blur-md rounded-3xl border-2 border-[#9a753e]/30 shadow-2xl flex flex-col md:flex-row justify-between items-center gap-12 mt-20 p-12"
       >
         <div className="absolute inset-0 opacity-5 rounded-3xl overflow-hidden">
           <div
@@ -171,14 +171,14 @@ export default function Integration() {
               whileHover={{ scale: 1.05, y: -5 }}
             >
               <div className="inline-flex items-center justify-center w-20 h-20 rounded-full bg-gradient-to-br from-[#9a753e]/20 to-[#9a753e]/5 border border-[#9a753e]/30 mb-4 group-hover:border-[#d3b87d]/50 transition-all duration-300">
-                <Icon className="w-10 h-10 text-[#d3b87d]" />
+                <Icon className="md:w-10 md:h-10 w-8 h-8 md:text-2xl text-xl text-[#d3b87d]" />
               </div>
 
-              <motion.div className="text-5xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#f5d9a1] to-[#d3b87d] mb-2">
+              <motion.div className="md:text-5xl text-3xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-[#f5d9a1] to-[#d3b87d] mb-2">
                 {stat.value}
               </motion.div>
 
-              <div className="text-lg text-gray-300 group-hover:text-[#d3b87d] transition-colors duration-300">
+              <div className="md:text-lg text-base text-gray-300 group-hover:text-[#d3b87d] transition-colors duration-300">
                 {stat.label}
               </div>
             </motion.div>

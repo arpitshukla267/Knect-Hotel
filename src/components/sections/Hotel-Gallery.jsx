@@ -2,6 +2,7 @@
 import Image from "next/image";
 import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
+import { motion } from "framer-motion";
 
 export default function HotelGallery() {
   const allImages = Array.from({ length: 19 }, (_, i) =>
@@ -41,16 +42,17 @@ export default function HotelGallery() {
 
   return (
     <div
-      className="text-white flex flex-col justify-center items-center w-full py-16 px-4 md:px-0"
+      className="text-white flex flex-col justify-center items-center w-full pt-8 pb-4 md:py-16 px-4 md:px-0"
       // style={{
       //   background: "radial-gradient(circle at 50% 50%, #9a753e 0%, #000000 100%)",
       // }}
     >
-      <h1 className="text-center text-4xl md:text-5xl marcellus mb-12">
-        Globally Trusted by 100+ Hotels and <br />
-        Vacation Rentals
-      </h1>
-
+        <motion.h1
+          className="marcellus text-center md:max-w-6xl max-w-xs text-3xl py-10 md:text-4xl lg:text-5xl xl:text-6xl font-bold mb-6 bg-gradient-to-r from-[#f5d9a1] via-[#d3b87d] to-[#9a753e] bg-clip-text text-transparent"
+        >
+          Globally Trusted by 100+ Hotels and
+          Vacation Rentals
+        </motion.h1>
       {/* Columns */}
       <div className="flex gap-3.5 w-full max-w-[70%] h-[500px] overflow-hidden">
         {columns.map((imgs, colIdx) => (
@@ -82,7 +84,7 @@ export default function HotelGallery() {
         ))}
       </div>
 
-      <Link href={"/solutions/hotels"} suppressHydrationWarning className="text-xl my-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
+      <Link href={"/solutions/hotels"} suppressHydrationWarning className="text-xl mt-10 bg-white/10 px-4 py-2 rounded-lg marcellus hover:cursor-pointer hover:scale-105 duration-200 hover:bg-white/20 hover:text-yellow-400">
         Explore Now
       </Link>
 
